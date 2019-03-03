@@ -90,7 +90,8 @@
             html = data.map(function(post) {
                 return tpl(searchTpl, {
                     title: filter(post.title, 'title'),
-                    path: post.path,
+                    /*关于在搜素结果content.json获取数据后加上子repository名构造最后url*/
+                    path: "hexoTest/"+post.path,
                     content: filter(post.text, 'content')
                 });
             }).join('');
