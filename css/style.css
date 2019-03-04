@@ -39,6 +39,9 @@ body {
   background: #ebebeb;
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  background-image:url(/hexoTest/img/background.png);
+  background-repeat:repeat-y;
+  background-attachment:scroll;
 }
 h1,
 h2,
@@ -377,7 +380,8 @@ pre {
 .main-navigation .navbar-header i {
   height: 56px;
   line-height: 56px;
-  font-size: 2em;
+  /* ##修改标题栏字体大小 */
+  font-size: 3em;
   cursor: pointer;
 }
 .main-navigation .navbar-header i:hover {
