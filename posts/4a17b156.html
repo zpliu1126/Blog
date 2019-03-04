@@ -42,6 +42,8 @@
     
 
 
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+
 
 <link rel="stylesheet" href="/hexoTest/css/bootstrap.min.css?rev=3.3.7">
 <link rel="stylesheet" href="/hexoTest/css/font-awesome.min.css?rev=4.5.0">
@@ -206,28 +208,20 @@
 
     <div id="comments">
         
-	
-    <div id="vcomments" class="valine"></div>
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="/hexoTest/assets/valine.min.js"></script>
-
-    <script>
-        new Valine({
-            av: AV,
-            el: '#vcomments',
-            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
-            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
-            placeholder: '说点什么吧',
-            notify: false,
-            verify: false,
-            avatar: 'mm',
-            meta: 'nick,mail'.split(','),
-            pageSize: '10',
-            path: window.location.pathname,
-            lang: 'zh-CN'.toLowerCase()
-        })
-    </script>
-
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: window.location.pathname,
+        owner:"zpliu1126",
+        repo:"hexoTest",
+        oauth: {
+          client_id:"71df4231bdb5af8ac478",
+          client_secret:"6d2e7518f717fc6f60886eaf078c5212a432f9e0"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
 
     </div>
 
