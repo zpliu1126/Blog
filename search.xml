@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Linux]]></title>
+    <url>%2FhexoTest%2Farchives%2F53d0684b.html</url>
+    <content type="text"></content>
+      <categories>
+        <category>computerLanguage</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[hellozpliu]]></title>
+    <url>%2FhexoTest%2Farchives%2F87ef918.html</url>
+    <content type="text"></content>
+      <categories>
+        <category>Bioinformatic</category>
+      </categories>
+      <tags>
+        <tag>学习Circos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[[MachineLearning]模型评估与选择]]></title>
+    <url>%2FhexoTest%2Farchives%2F1caf3fc0.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[模型评估与选择]]></title>
+    <url>%2FhexoTest%2Farchives%2F7d1dcda7.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[Hello World]]></title>
-    <url>%2FhexoTest%2Fposts%2F4a17b156.html</url>
+    <url>%2FhexoTest%2Farchives%2F4a17b156.html</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
 </search>
