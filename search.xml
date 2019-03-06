@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[最小二乘python实现]]></title>
+    <url>%2FBlog%2Farchives%2F6c33c6ae.html</url>
+    <content type="text"><![CDATA[什么是最小二乘法通常用来对改定数据集D做线性回归，找到一条最逼近整个数据集的直线；在这里我只使用了一个属性到y的映射，其实也有多个属性可以同时进行映射，就需要用到降维的思想，例如我们有一对刮南瓜、西瓜、黄瓜；既可以使用三个坐标系将它们进行刻画。 让拟合直线上的每一个点距离D中的点的离均差的误差最小 limit1m(f(xi)-yi)2 推理步骤 当所有样本到直线上的点最小时，相当于对K和b求偏导为0 分别对k和b的公式进行转换，得到k和b的值 我发现它必定要过（x,y）的平均值的那个点 python实现12345678910111213141516171819202122232425262728293031323334353637383940#coding=UTF-8&apos;&apos;&apos;进行一元数据的拟合&apos;&apos;&apos;x=[1,2,3,4,5,6,7]y=[3,4,5,6,7,8,9]###计算拟合参数######def lineFitting(data_x,data_y): ###获取集合中样本数目 size=len(data_x) ##构造遍历索引变量 i=0 ###声明公式中的变量 sum_x=0 sum_y=0 sum_Xsquare=0 sum_xy=0 average_x=0 average_y=0 ######对各个变量进行赋值 while i&lt;size: sum_x+=data_x[i] sum_y+=data_y[i] sum_Xsquare+=data_x[i]*data_x[i] sum_xy+=data_x[i]*data_y[i] i+=1 average_x=sum_x/size average_y=sum_y/size ###获取各个参数后直接套公式#### k=(sum_xy-sum_y*average_x)/(sum_Xsquare-sum_x*average_x) b=average_y-k*average_x return [k,b]#########计算拟合后的参数#########fittingParameter=lineFitting(x,y)print(&quot;y=&quot;+str(fittingParameter[0])+&quot;*x&quot;+&quot;+&quot;+str(fittingParameter[1])+&quot;\n&quot;) 绘图最后本来打算画一个图的，但是在服务器上跑脚本，图片就算了吧]]></content>
+      <categories>
+        <category>MachineLearning</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[【持续更新】关于hexo博客的搭建]]></title>
     <url>%2FBlog%2Farchives%2Fd86fd5e9.html</url>
     <content type="text"><![CDATA[Quick start关于如何进行安装hexo和一些配置插件的过程我这里就不详细介绍了；大家可以百度网上一大堆，当然我这里推荐一些讲的比较好的博客遇见西门里面介绍了如何进行hexo的安装与主题的优化 插件的配置我使用的是gitment，还是对github比较有好感，具体教程参考：gitment 永久链接的配置借助于hexo-abbrlink插件，安装好之后呢；在博客目录下的配置文件中修改_config.yml文件就ok，具体的修改方式如下1234permalink: archives/:abbrlink.htmlabbrlink: alg: crc32 rep: hex 参考 关于在github二级仓库中构建博客 首先是在博客目录下的配置文件中进行设置 12url: https://zpliu1126.github.io/hexoTestroot: /hexoTest/ 接着就是关于搜素插件如何找到对应文件路径设置 12/*#######设置数据库所在文件*/xhr.open('GET', '/hexoTest/content.json', true); 由于该主题作者 Snippet并没有考虑到这一情况，我是在获取conten.js的路径中进行了修改 对应找到对应的数据文件之后进行路径的构造12/*关于在搜素结果content.json获取数据后加上子repository名构造最后url*/ path: "hexoTest/"+post.path, 其实就是一个字符串拼接的过程 关于文章如何进行分类的问题 1.在theme配置文件中打开category和tag标签 2.接着在每一个生成的文章中需要定义好category和tag内容才能进行跳转 3.同时在theme配置文件中可以定义好一些目录的跳转链接 123456789101112131415161718192021 #########文章的开头########## ---title: 关于hexo博客的搭建abbrlink: d86fd5e9date: 2019-03-05 18:06:07category: computerLanguagetag: - JavaScript - html - css---######导航栏##########menu:- page: home url: /hexoTest icon:- page: 计算机程序 url: /hexoTest/categories/computerLanguage/ icon:- page: Bioinformatic url: /hexoTest/categories/Bioinformatic/ 添加背景音乐 首先在网页版网易云找到喜欢的音乐，点击添加外部播放器有html和flash版本 我选择html版本，然后在theme的部署文件里随便找了个地方放了进去 最后调整播放框的大小]]></content>
