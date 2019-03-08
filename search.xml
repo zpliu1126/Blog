@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[实验进展]]></title>
+    <url>%2FBlog%2Farchives%2Fe5775d07.html</url>
+    <content type="text"><![CDATA[关于各个组织间的]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[梯度上升算法实现]]></title>
     <url>%2FBlog%2Farchives%2F1df1d0ad.html</url>
     <content type="text"><![CDATA[梯度上升算法概念例如我们存在一个函数 f(x)=X2+4x要求它的极值，主要就是求偏导为0的那个点的坐标像这种简单的函数直接使f(x)‘为0就行 但在真实的情况中函数没有我们想象的这么简单，那就只能让我们一步一步的逼近极值点 X i+1=X i+a*f(x)‘ a为步长控制更新的幅度，当函数值无限逼近极值点时停止迭代过程 代码实现12345678910111213141516171819202122232425#coding=UTF-8'''梯度上升算法的简单实现原函数f(x)=x2+4x'''def Gradient(): ##定义导函数 def gradientPrim(X): return -2*X+4 x_old=1 x_new=0 ###控制步长度 alpha=0.01 #####控制梯度阈值 presision=0.0000001 while abs(x_new-x_old)&gt;presision: x_old=x_new #将提升后的值代入导函数求得新的坐标点； #当导函数无限的笔记0的时候，x_old与x_new也就无限逼近了 x_new=x_old+alpha*gradientPrim(x_old) print(x_new)Gradient() 总结 梯度上升与梯度下降算法主要的一个思想 当函数达到极值点时，导函数为0,这时新的坐标点与旧的坐标点之间的距离将无限的逼近 逼近的精度受到判断指标presision影响 同时步长主要影响的是迭代的次数 参考https://blog.csdn.net/c406495762/article/details/77723333]]></content>
@@ -47,7 +52,7 @@
   <entry>
     <title><![CDATA[【持续更新】关于hexo博客的搭建]]></title>
     <url>%2FBlog%2Farchives%2Fd86fd5e9.html</url>
-    <content type="text"><![CDATA[Quick start关于如何进行安装hexo和一些配置插件的过程我这里就不详细介绍了；大家可以百度网上一大堆，当然我这里推荐一些讲的比较好的博客遇见西门里面介绍了如何进行hexo的安装与主题的优化 插件的配置我使用的是gitment，还是对github比较有好感，具体教程参考：gitment 永久链接的配置借助于hexo-abbrlink插件，安装好之后呢；在博客目录下的配置文件中修改_config.yml文件就ok，具体的修改方式如下1234permalink: archives/:abbrlink.htmlabbrlink: alg: crc32 rep: hex 参考 关于在github二级仓库中构建博客 首先是在博客目录下的配置文件中进行设置 12url: https://zpliu1126.github.io/hexoTestroot: /hexoTest/ 接着就是关于搜素插件如何找到对应文件路径设置 12/*#######设置数据库所在文件*/xhr.open('GET', '/hexoTest/content.json', true); 由于该主题作者 Snippet并没有考虑到这一情况，我是在获取conten.js的路径中进行了修改 对应找到对应的数据文件之后进行路径的构造12/*关于在搜素结果content.json获取数据后加上子repository名构造最后url*/ path: "hexoTest/"+post.path, 其实就是一个字符串拼接的过程 关于文章如何进行分类的问题 1.在theme配置文件中打开category和tag标签 2.接着在每一个生成的文章中需要定义好category和tag内容才能进行跳转 3.同时在theme配置文件中可以定义好一些目录的跳转链接 123456789101112131415161718192021 #########文章的开头########## ---title: 关于hexo博客的搭建abbrlink: d86fd5e9date: 2019-03-05 18:06:07category: computerLanguagetag: - JavaScript - html - css---######导航栏##########menu:- page: home url: /hexoTest icon:- page: 计算机程序 url: /hexoTest/categories/computerLanguage/ icon:- page: Bioinformatic url: /hexoTest/categories/Bioinformatic/ 添加背景音乐 首先在网页版网易云找到喜欢的音乐，点击添加外部播放器有html和flash版本 我选择html版本，然后在theme的部署文件里随便找了个地方放了进去 最后调整播放框的大小]]></content>
+    <content type="text"><![CDATA[Quick start关于如何进行安装hexo和一些配置插件的过程我这里就不详细介绍了；大家可以百度网上一大堆，当然我这里推荐一些讲的比较好的博客遇见西门里面介绍了如何进行hexo的安装与主题的优化 插件的配置我使用的是gitment，还是对github比较有好感，具体教程参考：gitment 永久链接的配置借助于hexo-abbrlink插件，安装好之后呢；在博客目录下的配置文件中修改_config.yml文件就ok，具体的修改方式如下1234permalink: archives/:abbrlink.htmlabbrlink: alg: crc32 rep: hex 参考 关于在github二级仓库中构建博客 首先是在博客目录下的配置文件中进行设置 12url: https://zpliu1126.github.io/hexoTestroot: /hexoTest/ 接着就是关于搜素插件如何找到对应文件路径设置 12/*#######设置数据库所在文件*/xhr.open('GET', '/hexoTest/content.json', true); 由于该主题作者 Snippet并没有考虑到这一情况，我是在获取conten.js的路径中进行了修改 对应找到对应的数据文件之后进行路径的构造12/*关于在搜素结果content.json获取数据后加上子repository名构造最后url*/ path: "hexoTest/"+post.path, 其实就是一个字符串拼接的过程 关于文章如何进行分类的问题 1.在theme配置文件中打开category和tag标签 2.接着在每一个生成的文章中需要定义好category和tag内容才能进行跳转 3.同时在theme配置文件中可以定义好一些目录的跳转链接 123456789101112131415161718192021 #########文章的开头########## ---title: 关于hexo博客的搭建abbrlink: d86fd5e9date: 2019-03-05 18:06:07category: computerLanguagetag: - JavaScript - html - css---######导航栏##########menu:- page: home url: /hexoTest icon:- page: 计算机程序 url: /hexoTest/categories/computerLanguage/ icon:- page: Bioinformatic url: /hexoTest/categories/Bioinformatic/ 添加背景音乐 首先在网页版网易云找到喜欢的音乐，点击添加外部播放器有html和flash版本 我选择html版本，然后在theme的部署文件里随便找了个地方放了进去 最后调整播放框的大小 文章加密访问 基于插件访问 1hexo-blog-encrypt 修改根目录配置文件 1234# Security##encrypt: enable: true 在文章头部加上password字段 参考文章加密]]></content>
       <categories>
         <category>computerLanguage</category>
       </categories>
