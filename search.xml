@@ -14,7 +14,7 @@
   <entry>
     <title><![CDATA[logistic回归]]></title>
     <url>%2FBlog%2Farchives%2Fb10b3e49.html</url>
-    <content type="text"><![CDATA[概念 logistics回归是一种二分类的算法，它利用sigmoid函数将样本数据映射在[0,1]空间 假设我们的一个样本有n个属性x 1…x n,那就需要有n个参数构成的矩阵，将其构造成一个线性模型 对每一个样本我们都可以使用这个参数矩阵去计算一个条件概率； P(y=1|x,w)=0.51P(y=1|x,w)=0.99同一个样本在不同的参数矩阵w下，对样本估计为1的概率不同，我们需要取得最大的概率 扩展到整个样本， 又因为样本之间是独立同分布的，就可以用每个样本的概率做累乘 做完乘法之后将会得到一个关于w矩阵的概率函数，我们训练的目的就是要寻找一组w参数来使得我们正确判断y=1与y=0的概率达到最大 关于累乘的求导，通常使用ln函数变成累加，方便计算 这就回到了对函数求极值点的问题了，数据已经有了接下来就是要梯度法进行求解就行 公式推导参考https://blog.csdn.net/lgb_love/article/details/80592147https://blog.csdn.net/c406495762/article/details/77723333最大似然法]]></content>
+    <content type="text"><![CDATA[概念 logistics回归是一种二分类的算法，它利用sigmoid函数将样本数据映射在[0,1]空间 假设我们的一个样本有n个属性x 1…x n,那就需要有n个参数构成的矩阵，将其构造成一个线性模型 对每一个样本我们都可以使用这个参数矩阵去计算一个条件概率； P(y=1|x,w)=0.51P(y=1|x,w)=0.99同一个样本在不同的参数矩阵w下，对样本估计为1的概率不同，我们需要取得最大的概率 扩展到整个样本， 又因为样本之间是独立同分布的，就可以用每个样本的概率做累乘 做完乘法之后将会得到一个关于w矩阵的概率函数，我们训练的目的就是要寻找一组w参数来使得我们正确判断y=1与y=0的概率达到最大 关于累乘的求导，通常使用ln函数变成累加，方便计算 这就回到了对函数求极值点的问题了，数据已经有了接下来就是要梯度法进行求解就行 在梯度下降过程中使用矢量法进行替换求解公式推导 矢量化在利用梯度求解过程中使用到矢量化的思想 在迭代的过程中设置w参数的初始值为 n x 1 的矩阵 接下来往公式里套就行了代码实现123456789101112131415161718192021222324252627282930313233343536373839404142#ocding=UTF-8####罗杰斯特回归##import numpy as np ##读取文件数据##def loadDataSet(): dataMat=[] labelMat=[] fr=open("testSet.txt") for line in fr.readlines(): linerArr=line.strip().split() dataMat.append([1,float(linerArr[0]),float(linerArr[1])]) labelMat.append(int(linerArr[2])) fr.close() return(dataMat,labelMat)def sigmoid(x): return(1.0/(1+np.exp(-x)))####梯度上升法####def gradAscent(dataMatin,labelMatin): dataMatout=np.mat(dataMatin) labelMatout=np.mat(labelMatin).transpose() m,n=np.shape(dataMatout) alpha=0.001 maxCycle=500 ###初始参数的矩阵 weights=np.ones((n,1)) for k in range(maxCycle): ##这里已经把累加算了，得到m x 1矩阵 h=sigmoid(dataMatout*weights) error=labelMatout-h #####把x矩阵转置构造 n x m 矩阵 weights=weights+alpha*dataMatout.transpose()*error return weightsdataMat,labelMat=loadDataSet()print(gradAscent(dataMat,labelMat)) 参考https://blog.csdn.net/lgb_love/article/details/80592147https://blog.csdn.net/c406495762/article/details/77723333最大似然法矢量化]]></content>
       <categories>
         <category>MachineLearning</category>
       </categories>
@@ -36,7 +36,7 @@
   <entry>
     <title><![CDATA[最小二乘python实现]]></title>
     <url>%2FBlog%2Farchives%2F6c33c6ae.html</url>
-    <content type="text"><![CDATA[什么是最小二乘法通常用来对改定数据集D做线性回归，找到一条最逼近整个数据集的直线；在这里我只使用了一个属性到y的映射，其实也有多个属性可以同时进行映射，就需要用到降维的思想，例如我们有一对刮南瓜、西瓜、黄瓜；既可以使用三个坐标系将它们进行刻画。 让拟合直线上的每一个点距离D中的点的离均差的误差最小 limit1m(f(xi)-yi)2 推理步骤 当所有样本到直线上的点最小时，相当于对K和b求偏导为0 分别对k和b的公式进行转换，得到k和b的值 我发现它必定要过（x,y）的平均值的那个点 python实现12345678910111213141516171819202122232425262728293031323334353637383940#coding=UTF-8&apos;&apos;&apos;进行一元数据的拟合&apos;&apos;&apos;x=[1,2,3,4,5,6,7]y=[3,4,5,6,7,8,9]###计算拟合参数######def lineFitting(data_x,data_y): ###获取集合中样本数目 size=len(data_x) ##构造遍历索引变量 i=0 ###声明公式中的变量 sum_x=0 sum_y=0 sum_Xsquare=0 sum_xy=0 average_x=0 average_y=0 ######对各个变量进行赋值 while i&lt;size: sum_x+=data_x[i] sum_y+=data_y[i] sum_Xsquare+=data_x[i]*data_x[i] sum_xy+=data_x[i]*data_y[i] i+=1 average_x=sum_x/size average_y=sum_y/size ###获取各个参数后直接套公式#### k=(sum_xy-sum_y*average_x)/(sum_Xsquare-sum_x*average_x) b=average_y-k*average_x return [k,b]#########计算拟合后的参数#########fittingParameter=lineFitting(x,y)print(&quot;y=&quot;+str(fittingParameter[0])+&quot;*x&quot;+&quot;+&quot;+str(fittingParameter[1])+&quot;\n&quot;) 绘图最后本来打算画一个图的，但是在服务器上跑脚本，图片就算了吧]]></content>
+    <content type="text"><![CDATA[什么是最小二乘法通常用来对改定数据集D做线性回归，找到一条最逼近整个数据集的直线；在这里我只使用了一个属性到y的映射，其实也有多个属性可以同时进行映射，就需要用到降维的思想，例如我们有一对刮南瓜、西瓜、黄瓜；既可以使用三个坐标系将它们进行刻画。 让拟合直线上的每一个点距离D中的点的离均差的误差最小 Σ1m(f(xi)-yi)2 推理步骤 当所有样本到直线上的点最小时，相当于对K和b求偏导为0 分别对k和b的公式进行转换，得到k和b的值 我发现它必定要过（x,y）的平均值的那个点 python实现12345678910111213141516171819202122232425262728293031323334353637383940#coding=UTF-8&apos;&apos;&apos;进行一元数据的拟合&apos;&apos;&apos;x=[1,2,3,4,5,6,7]y=[3,4,5,6,7,8,9]###计算拟合参数######def lineFitting(data_x,data_y): ###获取集合中样本数目 size=len(data_x) ##构造遍历索引变量 i=0 ###声明公式中的变量 sum_x=0 sum_y=0 sum_Xsquare=0 sum_xy=0 average_x=0 average_y=0 ######对各个变量进行赋值 while i&lt;size: sum_x+=data_x[i] sum_y+=data_y[i] sum_Xsquare+=data_x[i]*data_x[i] sum_xy+=data_x[i]*data_y[i] i+=1 average_x=sum_x/size average_y=sum_y/size ###获取各个参数后直接套公式#### k=(sum_xy-sum_y*average_x)/(sum_Xsquare-sum_x*average_x) b=average_y-k*average_x return [k,b]#########计算拟合后的参数#########fittingParameter=lineFitting(x,y)print(&quot;y=&quot;+str(fittingParameter[0])+&quot;*x&quot;+&quot;+&quot;+str(fittingParameter[1])+&quot;\n&quot;) 绘图最后本来打算画一个图的，但是在服务器上跑脚本，图片就算了吧]]></content>
       <categories>
         <category>MachineLearning</category>
       </categories>
@@ -93,7 +93,7 @@
   <entry>
     <title><![CDATA[Circos其实很简单]]></title>
     <url>%2FBlog%2Farchives%2F87ef918.html</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[links中rule规则让color颜色与第二个连接点的颜色相同color = eval(var(chr2))]]></content>
       <categories>
         <category>Bioinformatic</category>
       </categories>
