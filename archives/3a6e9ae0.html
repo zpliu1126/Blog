@@ -1,230 +1,8 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
-    <!--Setting-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta name="apple-mobile-web-app-capable" content="ZpliuBlog">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no,email=no,adress=no">
-    <meta name="browsermode" content="application">
-    <meta name="screen-orientation" content="portrait">
-    <link rel="dns-prefetch" href="https://zpliu1126.github.io/Blog">
-    <!--SEO-->
+<!DOCTYPE HTML><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"><meta http-equiv="Cache-Control" content="no-siteapp"><meta http-equiv="Cache-Control" content="no-transform"><meta name="renderer" content="webkit|ie-comp|ie-stand"><meta name="apple-mobile-web-app-capable" content="ZpliuBlog"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no,email=no,adress=no"><meta name="browsermode" content="application"><meta name="screen-orientation" content="portrait"><link rel="dns-prefetch" href="https://zpliu1126.github.io/Blog"><meta name="keywords" content="python"><meta name="description" content="LAD概括LAD主要用于在高维数据的分类中，将数据按照线性模型进行降维；使得数据得到很好的分类同时避免数据过度拟合，与PAC不同的是
 
-    <meta name="keywords" content="python">
-
-
-    <meta name="description" content="LAD概括LAD主要用于在高维数据的分类中，将数据按照线性模型进行降维；使得数据得到很好的分类同时避免数据过度拟合，与PAC不同的是
-
-LAD主要用于有监督的学习，用于对目标分类;约束条件则是类...">
-
-
-
-<meta name="robots" content="all">
-<meta name="google" content="all">
-<meta name="googlebot" content="all">
-<meta name="verify" content="all">
-
-    <!--Title-->
-
-
-<title>LDA线性判别分析 | ZpliuBlog</title>
-
-
-    <link rel="alternate" href="/atom.xml" title="ZpliuBlog" type="application/atom+xml">
-
-
-    <link rel="icon" href="/Blog/img/candy.ico">
-
-    
-
-
-    <link rel="stylesheet" href="https://jjeejj.github.io/js/gitment.js.css">
-
-
-<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
-<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
-<link rel="stylesheet" href="/css/style.css?rev=@@hash">
-
-
-
-
-    
-
-
-
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?c0aba222dfddfe9f70bd4a3d5bc43424";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-
-
-
-    
-
-    <link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
-    <!-- 加载放大图片所需的jquery -->
-    <script type="text/javascript" src="/Blog/js/jquery-1.11.1.min.js"></script>
-    <!-- ##代码高亮做好了 -->
-<link rel="stylesheet" href="/Blog/js/google-code-prettify/TranquilHeart.css" type="text/css">
-<script src="/Blog/js/google-code-prettify/prettify.js" type="text/javascript"></script>
-
-</head>
-
-</html>
-<!--[if lte IE 8]>
-<style>
+LAD主要用于有监督的学习，用于对目标分类;约束条件则是类..."><meta name="robots" content="all"><meta name="google" content="all"><meta name="googlebot" content="all"><meta name="verify" content="all"><title>LDA线性判别分析 | ZpliuBlog</title><link rel="alternate" href="/atom.xml" title="ZpliuBlog" type="application/atom+xml"><link rel="icon" href="/Blog/img/candy.ico"><link rel="stylesheet" href="https://jjeejj.github.io/js/gitment.js.css"><link rel="stylesheet" href="/Blog/css/bootstrap.min.css?rev=3.3.7"><link rel="stylesheet" href="/Blog/css/font-awesome.min.css?rev=4.5.0"><link rel="stylesheet" href="/Blog/css/style.css?rev=@@hash"><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c0aba222dfddfe9f70bd4a3d5bc43424";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css"><script type="text/javascript" src="/Blog/js/jquery-1.11.1.min.js"></script><link rel="stylesheet" href="/Blog/js/google-code-prettify/TranquilHeart.css" type="text/css"><script src="/Blog/js/google-code-prettify/prettify.js" type="text/javascript"></script></head></html><!--[if lte IE 8]><style>
     html{ font-size: 1em }
-</style>
-<![endif]-->
-<!--[if lte IE 9]>
-<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
-<![endif]-->
-
-<body>
-<!--################################-->
-<!-- 页面点击小红心 从网上找的-->
-<script type="text/javascript" src="/Blog/js/click.js"></script>
-<!--放大图片的js代码需要jquery1.11.1支持-->
-<script type="text/javascript" src="/Blog/js/img.js"></script>
-<!--################百度搜索引擎################### -->
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https'){
-   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-  }
-  else{
-  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-  }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-<!--################################### -->
-
-    
-    <nav class="main-navigation">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
-                    <span class="sr-only"></span>
-                        <i class="fa fa-bars"></i>
-                    </span>
-                    <a class="navbar-brand" href="https://zpliu1126.github.io/Blog">ZpliuBlog</a>
-                </div>
-                <div class="collapse navbar-collapse" id="main-menu">
-                    <ul class="menu">
-                        
-                            <li role="presentation" class="text-center">
-                                <a href="/"><i class="fa "></i>首页</a>
-                            </li>
-                        
-                            <li role="presentation" class="text-center">
-                                <a href="/categories/computerLanguage/"><i class="fa "></i>计算机程序</a>
-                            </li>
-                        
-                            <li role="presentation" class="text-center">
-                                <a href="/categories/Bioinformatic/"><i class="fa "></i>Bioinformatic</a>
-                            </li>
-                        
-                            <li role="presentation" class="text-center">
-                                <a href="/categories/MachineLearning"><i class="fa "></i>机器学习算法</a>
-                            </li>
-                        
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
-    <section class="content-wrap">
-        <div class="container">
-            <div class="row">
-                <main class="col-md-8 main-content m-post">
-                    <p id="process"></p>
-<article class="post">
-    <div class="post-head">
-        <h1 id="LDA线性判别分析">
-            
-	            LDA线性判别分析
-            
-        </h1>
-        <div class="post-meta">
-    
-        <span class="categories-meta fa-wrap">
-            <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/categories/MachineLearning/">MachineLearning</a>
-        </span>
-    
-
-    
-        <span class="fa-wrap">
-            <i class="fa fa-tags"></i>
-            <span class="tags-meta">
-                
-                    <a class="tag-link" href="/tags/python/">python</a>
-                
-            </span>
-        </span>
-    
-
-    
-        
-        <span class="fa-wrap">
-            <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/03/08</span>
-        </span>
-        
-            <span class="fa-wrap">
-                <i class="fa fa-eye"></i>
-                <span id="busuanzi_value_page_pv"></span>
-            </span>
-        
-    
-</div>
-            
-            
-    </div>
-    
-    <div class="post-body post-content">
-        <h2 id="LAD概括"><a href="#LAD概括" class="headerlink" title="LAD概括"></a>LAD概括</h2><p>LAD主要用于在高维数据的分类中，将数据按照线性模型进行降维；使得数据得到很好的分类同时避免数据过度拟合，与PAC不同的是</p>
-<blockquote>
-<p>LAD主要用于有监督的学习，用于对目标分类;约束条件则是类间的协方差最大，同类内的协方差最小化<br>PAC则是无监督的学习，将样本投影到几个正交的方向，同时同类内的方差越大越好，尽可能的保留样本的全部信息</p>
-</blockquote>
-<hr>
-<p>两类的LAD问题可以看作是把所有样本都投影到一个方向上，然后在这个一维空间中确定一个分类的阈值。过这个阈值点且与投影方向垂直的超平面就是两类的分类面。</p>
-<h2 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h2><ul>
-<li>映射直线<br>y=wTx</li>
-<li>约束条件则是类间的协方差最大，同类内的协方差最小化</li>
-</ul>
-<p>J=||wTμ0−wTμ1||22/wT(∑0+∑1)w=wT(μ0−μ1)(μ0−μ1)Tw/wT(∑0+∑1)w</p>
-<blockquote>
-<p>这里涉及到欧氏距离也就是矩阵的平方等于 原矩阵*矩阵的转置</p>
-</blockquote>
-<ul>
-<li><p>目的使得约束条件J最大化<br>类间协方差矩阵 Sb=(μ0−μ1)(μ0−μ1)T<br>类间协方差矩阵 Sw=∑x∈D0(x−μ0)(x−u0)T+∑x∈D1(x−μ1)(x−u1)T<br>重写J: J=wTSbw/wTSww</p>
-</li>
-<li><p>关于W的确定，由于分子分母是w的平方，已经将w实数化；因此方程的解与w的大小已经无关，仅仅是方向上有关了</p>
-</li>
-</ul>
-<h3 id="拉格朗日乘子法"><a href="#拉格朗日乘子法" class="headerlink" title="拉格朗日乘子法"></a>拉格朗日乘子法</h3><p>令wTSww=1<br>c(w)=wTSbw−λ(wTSww−1)<br>涉及到矩阵的求导<br>dc/dw=2Sbw−2λSww=0<br>Sbw=λSww<br>SbW 类间散度矩阵 方向是固定的U0-U1<br>w=Sw <sup>-1</sup>(u0-u1)</p>
-<hr>
-<h2 id="基于两个以上特征值的分类"><a href="#基于两个以上特征值的分类" class="headerlink" title="基于两个以上特征值的分类"></a>基于两个以上特征值的分类</h2><p>原理是一样的，在计算类间散度矩阵是多了两个参数<br>SB=∑i=1-c Ni(mmi−mm)(mmi−mm)T<br>mm 是全局均值，而 mmi 和 Ni 是每类样本的均值和样本数。</p>
-<h2 id="求出特征值和特征序列"><a href="#求出特征值和特征序列" class="headerlink" title="求出特征值和特征序列"></a>求出特征值和特征序列</h2><p>矩阵 S−1WSB =W<br>按照特征值排序，将原来多维度的空间映射到对应的空间</p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="数据获取与格式整理"><a href="#数据获取与格式整理" class="headerlink" title="数据获取与格式整理"></a>数据获取与格式整理</h3><pre><code class="python">#coding=UTF-8
+</style><![endif]--><!--[if lte IE 9]><div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div><![endif]--><body><script type="text/javascript" src="/Blog/js/click.js"></script><script type="text/javascript" src="/Blog/js/img.js"></script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><nav class="main-navigation"><div class="container"><div class="row"><div class="col-sm-12"><div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav"><span class="sr-only"></span><i class="fa fa-bars"></i></span> <a class="navbar-brand" href="https://zpliu1126.github.io/Blog">ZpliuBlog</a></div><div class="collapse navbar-collapse" id="main-menu"><ul class="menu"><li role="presentation" class="text-center"><a href="/Blog"><i class="fa"></i> 首页</a></li><li role="presentation" class="text-center"><a href="/Blog/categories/computerLanguage/"><i class="fa"></i> 计算机程序</a></li><li role="presentation" class="text-center"><a href="/Blog/categories/Bioinformatic/"><i class="fa"></i> Bioinformatic</a></li><li role="presentation" class="text-center"><a href="/Blog/categories/MachineLearning"><i class="fa"></i> 机器学习算法</a></li></ul></div></div></div></div></nav><section class="content-wrap"><div class="container"><div class="row"><main class="col-md-8 main-content m-post"><p id="process"></p><article class="post"><div class="post-head"><h1 id="LDA线性判别分析">LDA线性判别分析</h1><div class="post-meta"><span class="categories-meta fa-wrap"><i class="fa fa-folder-open-o"></i> <a class="category-link" href="/Blog/categories/MachineLearning/">MachineLearning</a></span><span class="fa-wrap"><i class="fa fa-tags"></i> <span class="tags-meta"><a class="tag-link" href="/Blog/tags/python/">python</a></span></span><span class="fa-wrap"><i class="fa fa-clock-o"></i> <span class="date-meta">2019/03/08</span></span><span class="fa-wrap"><i class="fa fa-eye"></i><span id="busuanzi_value_page_pv"></span></span></div></div><div class="post-body post-content"><h2 id="LAD概括"><a href="#LAD概括" class="headerlink" title="LAD概括"></a>LAD概括</h2><p>LAD主要用于在高维数据的分类中，将数据按照线性模型进行降维；使得数据得到很好的分类同时避免数据过度拟合，与PAC不同的是</p><blockquote><p>LAD主要用于有监督的学习，用于对目标分类;约束条件则是类间的协方差最大，同类内的协方差最小化<br>PAC则是无监督的学习，将样本投影到几个正交的方向，同时同类内的方差越大越好，尽可能的保留样本的全部信息</p></blockquote><hr><p>两类的LAD问题可以看作是把所有样本都投影到一个方向上，然后在这个一维空间中确定一个分类的阈值。过这个阈值点且与投影方向垂直的超平面就是两类的分类面。</p><h2 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h2><ul><li>映射直线<br>y=wTx</li><li>约束条件则是类间的协方差最大，同类内的协方差最小化</li></ul><p>J=||wTμ0−wTμ1||22/wT(∑0+∑1)w=wT(μ0−μ1)(μ0−μ1)Tw/wT(∑0+∑1)w</p><blockquote><p>这里涉及到欧氏距离也就是矩阵的平方等于 原矩阵*矩阵的转置</p></blockquote><ul><li><p>目的使得约束条件J最大化<br>类间协方差矩阵 Sb=(μ0−μ1)(μ0−μ1)T<br>类间协方差矩阵 Sw=∑x∈D0(x−μ0)(x−u0)T+∑x∈D1(x−μ1)(x−u1)T<br>重写J: J=wTSbw/wTSww</p></li><li><p>关于W的确定，由于分子分母是w的平方，已经将w实数化；因此方程的解与w的大小已经无关，仅仅是方向上有关了</p></li></ul><h3 id="拉格朗日乘子法"><a href="#拉格朗日乘子法" class="headerlink" title="拉格朗日乘子法"></a>拉格朗日乘子法</h3><p>令wTSww=1<br>c(w)=wTSbw−λ(wTSww−1)<br>涉及到矩阵的求导<br>dc/dw=2Sbw−2λSww=0<br>Sbw=λSww<br>SbW 类间散度矩阵 方向是固定的U0-U1<br>w=Sw <sup>-1</sup>(u0-u1)</p><hr><h2 id="基于两个以上特征值的分类"><a href="#基于两个以上特征值的分类" class="headerlink" title="基于两个以上特征值的分类"></a>基于两个以上特征值的分类</h2><p>原理是一样的，在计算类间散度矩阵是多了两个参数<br>SB=∑i=1-c Ni(mmi−mm)(mmi−mm)T<br>mm 是全局均值，而 mmi 和 Ni 是每类样本的均值和样本数。</p><h2 id="求出特征值和特征序列"><a href="#求出特征值和特征序列" class="headerlink" title="求出特征值和特征序列"></a>求出特征值和特征序列</h2><p>矩阵 S−1WSB =W<br>按照特征值排序，将原来多维度的空间映射到对应的空间</p><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="数据获取与格式整理"><a href="#数据获取与格式整理" class="headerlink" title="数据获取与格式整理"></a>数据获取与格式整理</h3><pre><code class="python">#coding=UTF-8
 import numpy as np
 import pandas as pd 
 from sklearn.preprocessing import LabelEncoder
@@ -270,8 +48,7 @@ df.dropna(how=&quot;all&quot;,inplace=True)
 149                1.8  Iris-virginica 
 &#39;&#39;&#39;
 
-</code></pre>
-<h3 id="将类别数字化"><a href="#将类别数字化" class="headerlink" title="将类别数字化"></a>将类别数字化</h3><pre><code class="python">X=df[[0,1,2,3]].values #获取四种属性值
+</code></pre><h3 id="将类别数字化"><a href="#将类别数字化" class="headerlink" title="将类别数字化"></a>将类别数字化</h3><pre><code class="python">X=df[[0,1,2,3]].values #获取四种属性值
 y=df[&#39;classLab&#39;].values #获取类别名
 enc = LabelEncoder()
 label_encoder = enc.fit(y)
@@ -281,8 +58,7 @@ label_dict = {1: &#39;Setosa&#39;, 2: &#39;Versicolor&#39;, 3:&#39;Virginica&#39
 # print(len(y))
 &#39;&#39;&#39;
 数据处理完成
-</code></pre>
-<h3 id="计算每类花对应的特征值的均值"><a href="#计算每类花对应的特征值的均值" class="headerlink" title="计算每类花对应的特征值的均值"></a>计算每类花对应的特征值的均值</h3><pre><code class="python">##分别对三种花求其在4种属性上的均值
+</code></pre><h3 id="计算每类花对应的特征值的均值"><a href="#计算每类花对应的特征值的均值" class="headerlink" title="计算每类花对应的特征值的均值"></a>计算每类花对应的特征值的均值</h3><pre><code class="python">##分别对三种花求其在4种属性上的均值
 np.set_printoptions(precision=4)
 mean_vectors=[]
 for i in range(1,4):
@@ -296,8 +72,7 @@ mean Vector calss 2: [5.936 2.77  4.26  1.326]
 
 mean Vector calss 3: [6.588 2.974 5.552 2.026]
 &#39;&#39;&#39;
-</code></pre>
-<h3 id="类内散度矩阵"><a href="#类内散度矩阵" class="headerlink" title="类内散度矩阵"></a>类内散度矩阵</h3><pre><code class="python">S_W=np.zeros((4,4))
+</code></pre><h3 id="类内散度矩阵"><a href="#类内散度矩阵" class="headerlink" title="类内散度矩阵"></a>类内散度矩阵</h3><pre><code class="python">S_W=np.zeros((4,4))
 for cl,mv in zip(range(1,4),mean_vectors):
     ####每个类的类内散度矩阵
     class_sc_mat=np.zeros((4,4))
@@ -314,8 +89,7 @@ for cl,mv in zip(range(1,4),mean_vectors):
         row, mv = row.reshape(4,1), mv.reshape(4,1)
         class_sc_mat+=(row-mv).dot((row-mv).T)
     S_W+=class_sc_mat
-</code></pre>
-<h3 id="类间散度矩阵"><a href="#类间散度矩阵" class="headerlink" title="类间散度矩阵"></a>类间散度矩阵</h3><pre><code class="python">overall_mean=np.mean(X,axis=0)
+</code></pre><h3 id="类间散度矩阵"><a href="#类间散度矩阵" class="headerlink" title="类间散度矩阵"></a>类间散度矩阵</h3><pre><code class="python">overall_mean=np.mean(X,axis=0)
 S_b=np.zeros((4,4))
 for i,men_vector in enumerate(mean_vectors):
     ###获取样本数目
@@ -324,22 +98,18 @@ for i,men_vector in enumerate(mean_vectors):
     overall_mean=overall_mean.reshape(4,1)
     S_b+=n*(men_vector-overall_mean).dot((men_vector- overall_mean).T)
 print(&#39;between-class Scatter Matrix:\n&#39;, S_b)
-</code></pre>
-<h3 id="获取特征值和特征向量"><a href="#获取特征值和特征向量" class="headerlink" title="获取特征值和特征向量"></a>获取特征值和特征向量</h3><pre><code class="python">eig_vals, eig_vecs = np.linalg.eig(np.linalg.inv(S_W).dot(S_b))
+</code></pre><h3 id="获取特征值和特征向量"><a href="#获取特征值和特征向量" class="headerlink" title="获取特征值和特征向量"></a>获取特征值和特征向量</h3><pre><code class="python">eig_vals, eig_vecs = np.linalg.eig(np.linalg.inv(S_W).dot(S_b))
 
 for i in range(len(eig_vals)):
     eigvec_sc = eig_vecs[:,i].reshape(4,1)   
     print(&#39;\nEigenvector {}: \n{}&#39;.format(i+1, eigvec_sc.real))
     print(&#39;Eigenvalue {:}: {:.2e}&#39;.format(i+1, eig_vals[i].real))
-</code></pre>
-<h3 id="根据特征值大小选取特征向量降维"><a href="#根据特征值大小选取特征向量降维" class="headerlink" title="根据特征值大小选取特征向量降维"></a>根据特征值大小选取特征向量<strong>降维</strong></h3><pre><code class="python">eig_pairs = [(np.abs(eig_vals[i]), eig_vecs[:,i]) for i in range(len(eig_vals))]
+</code></pre><h3 id="根据特征值大小选取特征向量降维"><a href="#根据特征值大小选取特征向量降维" class="headerlink" title="根据特征值大小选取特征向量降维"></a>根据特征值大小选取特征向量<strong>降维</strong></h3><pre><code class="python">eig_pairs = [(np.abs(eig_vals[i]), eig_vecs[:,i]) for i in range(len(eig_vals))]
 eig_pairs = sorted(eig_pairs, key=lambda k: k[0], reverse=True)
 W = np.hstack((eig_pairs[0][1].reshape(4,1), eig_pairs[1][1].reshape(4,1)))
-</code></pre>
-<h3 id="映射到新的空间"><a href="#映射到新的空间" class="headerlink" title="映射到新的空间"></a>映射到新的空间</h3><pre><code class="python">X_lda = X.dot(W)
+</code></pre><h3 id="映射到新的空间"><a href="#映射到新的空间" class="headerlink" title="映射到新的空间"></a>映射到新的空间</h3><pre><code class="python">X_lda = X.dot(W)
 assert X_lda.shape == (150,2)
-</code></pre>
-<h3 id="作图"><a href="#作图" class="headerlink" title="作图"></a>作图</h3><pre><code class="python">def plot_step_lda():
+</code></pre><h3 id="作图"><a href="#作图" class="headerlink" title="作图"></a>作图</h3><pre><code class="python">def plot_step_lda():
 
     ax = plt.subplot(111)
     for label,marker,color in zip(
@@ -375,163 +145,4 @@ assert X_lda.shape == (150,2)
     plt.savefig(&quot;LDA.png&quot;)
 
 plot_step_lda()
-</code></pre>
-<p><img src="/Blog/img/machineLearning/LDA/LDA.png" class="pimg" alt width="100%"></p>
-<div class="Bigimglocation"></div>
-
-
-
-
-
-
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://sebastianraschka.com/Articles/2014_python_lda.html" target="_blank" rel="noopener">推荐看老外的英文介绍</a><br><a href="https://blog.csdn.net/leayc/article/details/76299694" target="_blank" rel="noopener">老外的翻译版</a><br>机器学习-线性判别分析.周志华x<br><a href="https://blog.csdn.net/liuweiyuxiang/article/details/78874106" target="_blank" rel="noopener">LAC</a><br><a href="https://blog.csdn.net/liuweiyuxiang/article/details/77685606" target="_blank" rel="noopener">拉格朗日乘子法</a><br><a href="https://blog.csdn.net/liuweiyuxiang/article/details/78853404" target="_blank" rel="noopener">PAC</a><br><a href="https://blog.csdn.net/z962013489/article/details/79871789" target="_blank" rel="noopener">二分类LAD</a></p>
-
-    </div>
-    
-    <div class="post-footer">
-        <div>
-            
-                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">zpliu1126</a>
-            
-        </div>
-        <div>
-            
-        </div>
-    </div>
-</article>
-
-<div class="article-nav prev-next-wrap clearfix">
-    
-    
-        <a href="/archives/e5775d07.html" class="next-post btn btn-default" title="实验进展">
-            <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">实验进展</span><i class="fa fa-angle-right fa-fw"></i>
-        </a>
-    
-</div>
-
-
-    <div id="comments">
-        
-	<script type="text/javascript" src="https://jjeejj.github.io/js/gitment.js"></script>
-<script>
-    var gitment = new Gitment({
-        id: window.location.pathname,
-        owner:"zpliu1126",
-        repo:"Blog",
-        oauth: {
-          client_id:"97dfe3c974f3eeff4f04",
-          client_secret:"ba7ca4ab8feef4fa0899c684a2cd00284500cbe3"
-        },
-        perPage:"10",
-    });
-    gitment.render('comments');
-</script>
-
-    </div>
-
-
-
-
-
-                </main>
-                
-                    <aside id="article-toc" role="navigation" class="col-md-4">
-    <div class="widget">
-        <h3 class="title">文章目录</h3>
-        
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LAD概括"><span class="toc-text">LAD概括</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公式推导"><span class="toc-text">公式推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#拉格朗日乘子法"><span class="toc-text">拉格朗日乘子法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于两个以上特征值的分类"><span class="toc-text">基于两个以上特征值的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求出特征值和特征序列"><span class="toc-text">求出特征值和特征序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实现"><span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据获取与格式整理"><span class="toc-text">数据获取与格式整理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将类别数字化"><span class="toc-text">将类别数字化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算每类花对应的特征值的均值"><span class="toc-text">计算每类花对应的特征值的均值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类内散度矩阵"><span class="toc-text">类内散度矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类间散度矩阵"><span class="toc-text">类间散度矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取特征值和特征向量"><span class="toc-text">获取特征值和特征向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根据特征值大小选取特征向量降维"><span class="toc-text">根据特征值大小选取特征向量降维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#映射到新的空间"><span class="toc-text">映射到新的空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作图"><span class="toc-text">作图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
-        
-    </div>
-</aside>
-
-                
-            </div>
-        </div>
-    </section>
-    <footer class="main-footer">
-    <div class="container">
-        <div class="row">
-        </div>
-    </div>
-</footer>
-
-<a id="back-to-top" class="icon-btn hide">
-	<i class="fa fa-chevron-up"></i>
-</a>
-
-
-
-    <div id="copyrightPosition" class="copyright">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="busuanzi">
-    
-        访问量:
-        <strong id="busuanzi_value_site_pv">
-            <i class="fa fa-spinner fa-spin"></i>
-        </strong>
-        &nbsp; | &nbsp;
-        访客数:
-        <strong id="busuanzi_value_site_uv">
-            <i class="fa fa-spinner fa-spin"></i>
-        </strong>
-    
-</div>
-
-            </div>
-            <div class="col-sm-12">
-                <span>Copyright &copy; 2019
-                </span> |
-                <span>
-                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
-                </span> |
-                <span>
-                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-$(window).load(function(){
- $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
- prettyPrint();
- })
-</script>
-
-
-
-    <script src="/assets/tagcanvas.min.js?rev=2.9"></script>
-    <script>
-        var tagOption = {
-            textColour: '#444', // 字体颜色
-            outlineMethod: 'block', // 选中模式
-            outlineColour: '#FFDAB9', // 选中模式的颜色
-            interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
-            textHeight: 13,
-            outlineRadius: 3,
-            freezeActive: true || '', // 选中的标签是否继续滚动
-            frontSelect: true || '', // 不选标签云后部的标签
-            initial: [0.1, -0.1],
-            depth: 0.5,
-            decel: 0.95,
-            maxSpeed: 0.03,
-            reverse: true || '', // 是否反向触发
-            fadeIn: 500, // 进入动画时间
-            wheelZoom: false || '' // 是否启用鼠标滚轮
-        }
-        TagCanvas.Start('tag-cloud-3d','',tagOption);
-    </script>
-
-
-
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-<script src="/js/app.js?rev=@@hash"></script>   
-
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false}});</script></body>
-</html>
+</code></pre><p><img src="/Blog/img/machineLearning/LDA/LDA.png" class="pimg" alt width="100%"></p><div class="Bigimglocation"></div><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://sebastianraschka.com/Articles/2014_python_lda.html" target="_blank" rel="noopener">推荐看老外的英文介绍</a><br><a href="https://blog.csdn.net/leayc/article/details/76299694" target="_blank" rel="noopener">老外的翻译版</a><br>机器学习-线性判别分析.周志华x<br><a href="https://blog.csdn.net/liuweiyuxiang/article/details/78874106" target="_blank" rel="noopener">LAC</a><br><a href="https://blog.csdn.net/liuweiyuxiang/article/details/77685606" target="_blank" rel="noopener">拉格朗日乘子法</a><br><a href="https://blog.csdn.net/liuweiyuxiang/article/details/78853404" target="_blank" rel="noopener">PAC</a><br><a href="https://blog.csdn.net/z962013489/article/details/79871789" target="_blank" rel="noopener">二分类LAD</a></p></div><div class="post-footer"><div>转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">zpliu1126</a></div><div></div></div></article><div class="article-nav prev-next-wrap clearfix"><a href="/Blog/archives/e5775d07.html" class="next-post btn btn-default" title="实验进展"><span class="hidden-lg">下一篇</span> <span class="hidden-xs">实验进展</span><i class="fa fa-angle-right fa-fw"></i></a></div><div id="comments"><script type="text/javascript" src="https://jjeejj.github.io/js/gitment.js"></script><script>var gitment=new Gitment({id:window.location.pathname,owner:"zpliu1126",repo:"Blog",oauth:{client_id:"97dfe3c974f3eeff4f04",client_secret:"ba7ca4ab8feef4fa0899c684a2cd00284500cbe3"},perPage:"10"});gitment.render("comments")</script></div></main><aside id="article-toc" role="navigation" class="col-md-4"><div class="widget"><h3 class="title">文章目录</h3><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LAD概括"><span class="toc-text">LAD概括</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公式推导"><span class="toc-text">公式推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#拉格朗日乘子法"><span class="toc-text">拉格朗日乘子法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于两个以上特征值的分类"><span class="toc-text">基于两个以上特征值的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求出特征值和特征序列"><span class="toc-text">求出特征值和特征序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实现"><span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据获取与格式整理"><span class="toc-text">数据获取与格式整理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将类别数字化"><span class="toc-text">将类别数字化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算每类花对应的特征值的均值"><span class="toc-text">计算每类花对应的特征值的均值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类内散度矩阵"><span class="toc-text">类内散度矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类间散度矩阵"><span class="toc-text">类间散度矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取特征值和特征向量"><span class="toc-text">获取特征值和特征向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根据特征值大小选取特征向量降维"><span class="toc-text">根据特征值大小选取特征向量降维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#映射到新的空间"><span class="toc-text">映射到新的空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作图"><span class="toc-text">作图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol></div></aside></div></div></section><footer class="main-footer"><div class="container"><div class="row"></div></div></footer><a id="back-to-top" class="icon-btn hide"><i class="fa fa-chevron-up"></i></a><div id="copyrightPosition" class="copyright"><div class="container"><div class="row"><div class="col-sm-12"><div class="busuanzi">访问量:<strong id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></strong> &nbsp; | &nbsp; 访客数:<strong id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></strong></div></div><div class="col-sm-12"><span>Copyright &copy; 2019</span> | <span>Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a></span> | <span>Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a></span></div></div></div></div><script>$(window).load(function(){$("pre").addClass("prettyprint linenums").attr("style","overflow:auto;"),prettyPrint()})</script><script src="/Blog/assets/tagcanvas.min.js?rev=2.9"></script><script>var tagOption={textColour:"#444",outlineMethod:"block",outlineColour:"#FFDAB9",interval:30,textHeight:13,outlineRadius:3,freezeActive:!0,frontSelect:!0,initial:[.1,-.1],depth:.5,decel:.95,maxSpeed:.03,reverse:!0,fadeIn:500,wheelZoom:""};TagCanvas.Start("tag-cloud-3d","",tagOption)</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="/Blog/js/app.js?rev=@@hash"></script><script src="/Blog/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/Blog/live2dw/assets/z16.model.json"},display:{position:"right",width:150,height:300},mobile:{show:!1}})</script></body>
