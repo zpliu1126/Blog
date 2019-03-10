@@ -20,8 +20,7 @@
 
 
     <meta name="description" content="blast+安装
-通过wget 命令直接下载到本地服务器中
-1wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/nc...">
+通过wget 命令直接下载到本地服务器中wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi...">
 
 
 
@@ -201,30 +200,27 @@
     
     <div class="post-body post-content">
         <h2 id="blast-安装"><a href="#blast-安装" class="headerlink" title="blast+安装"></a>blast+安装</h2><ol>
-<li><p>通过wget 命令直接下载到本地服务器中</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.2.30+-x64-linux.tar.gz</span><br></pre></td></tr></table></figure>
+<li>通过wget 命令直接下载到本地服务器中<pre><code class="Bash">wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.2.30+-x64-linux.tar.gz
+</code></pre>
 </li>
-<li><p>对下载好的文件进行解压</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf  ncbi-blast-2.2.30+-x64-linux.tar.gz</span><br></pre></td></tr></table></figure>
+<li>对下载好的文件进行解压<pre><code class="Bash">tar -zxvf  ncbi-blast-2.2.30+-x64-linux.tar.gz
+</code></pre>
 </li>
-<li><p>解压之后，其实就可以使用绝对路径使用blast+了；怎么知道blast的绝对路径呢</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwd ncbi-blast-2.2.30+-x64-linux.tar.gz/bin </span><br><span class="line">######例如我们得到这样的绝对路径##########</span><br><span class="line">/home/local/software/ncbi-blast-2.2.30+-x64-linux/bin/</span><br></pre></td></tr></table></figure>
-</li>
+<li>解压之后，其实就可以使用绝对路径使用blast+了；怎么知道blast的绝对路径呢<pre><code>pwd ncbi-blast-2.2.30+-x64-linux.tar.gz/bin 
+######例如我们得到这样的绝对路径##########
+/home/local/software/ncbi-blast-2.2.30+-x64-linux/bin/
+</code></pre>这条命令就得到了我们blast可执行程序所在的绝对路径，也就是在电脑上的哪个文件夹</li>
+<li>有了绝对路径我们就可以告诉计算机到哪里去找balst程序来执行<br>当执行blastn核苷酸比对程序时直接使用下面的命令就可以执行了<pre><code>/home/local/software/ncbi-blast-2.2.30+-x64-linux/bin/blastn
+</code></pre><h2 id="添加可执行程序到环境变量中"><a href="#添加可执行程序到环境变量中" class="headerlink" title="添加可执行程序到环境变量中"></a>添加可执行程序到环境变量中</h2></li>
 </ol>
-<p>这条命令就得到了我们blast可执行程序所在的绝对路径，也就是在电脑上的哪个文件夹</p>
-<ol start="4">
-<li>有了绝对路径我们就可以告诉计算机到哪里去找balst程序来执行<br>当执行blastn核苷酸比对程序时直接使用下面的命令就可以执行了<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/local/software/ncbi-blast-2.2.30+-x64-linux/bin/blastn</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="添加可执行程序到环境变量中"><a href="#添加可执行程序到环境变量中" class="headerlink" title="添加可执行程序到环境变量中"></a>添加可执行程序到环境变量中</h2><ul>
-<li>首先环境变量是啥？<br>环境变量其实就是一个变量，这个变量里面包括一个叫$PATH的变量，里面存储着一些你想告诉计算机的东西。比如我想告诉计算机blast+的所有可执行的程序都放在哪个文件里面，我只需要在$PATH这个变量中加上blast/bin的文件夹；这样当我们在计算机的任何地方想要执行balst的时候只需要按下blastn或者其他命令就行了<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;export PATH=/home/local/software/ncbi-blast-2.2.30+-x64-linux/bin:\$PATH&quot; &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="blast的使用"><a href="#blast的使用" class="headerlink" title="blast的使用"></a>blast的使用</h2><h3 id="构建本地blast库"><a href="#构建本地blast库" class="headerlink" title="构建本地blast库"></a>构建本地blast库</h3><p>例如要构建核酸库，使用整个CDS构建的基因序列库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">makeblastdb -in &quot;CDS文件&quot; -dbtype &quot;nucl&quot; -parse_seqids -out &quot;库名称的前缀&quot;</span><br></pre></td></tr></table></figure></p>
-<p>具体参数的意义可以使用 -help参数查看手册，我就不多做赘述<br>同理构建蛋白库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">makeblastdb -in &quot;氨基酸序列文件&quot;  -dbtype &quot;prot&quot; -parse_seqids -out &quot;库名称的前缀&quot;</span><br></pre></td></tr></table></figure></p>
-<h3 id="进行序列比对"><a href="#进行序列比对" class="headerlink" title="进行序列比对"></a>进行序列比对</h3><ul>
-<li>首先我们需要准备比对的fasta文件，然后一条命令就可以了<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blastn -query &quot;需要比对的文件&quot; -db &quot;上一步建好的库的目录加上/库前缀&quot;  -evalue 1e-5 -outfmt 6 -out &quot;输出文件&quot;</span><br></pre></td></tr></table></figure>
-</li>
+<ul>
+<li>首先环境变量是啥？<br>环境变量其实就是一个变量，这个变量里面包括一个叫$PATH的变量，里面存储着一些你想告诉计算机的东西。比如我想告诉计算机blast+的所有可执行的程序都放在哪个文件里面，我只需要在$PATH这个变量中加上blast/bin的文件夹；这样当我们在计算机的任何地方想要执行balst的时候只需要按下blastn或者其他命令就行了<pre><code>echo &quot;export PATH=/home/local/software/ncbi-blast-2.2.30+-x64-linux/bin:\$PATH&quot; &gt;&gt; ~/.bashrc
+source ~/.bashrc
+</code></pre><h2 id="blast的使用"><a href="#blast的使用" class="headerlink" title="blast的使用"></a>blast的使用</h2><h3 id="构建本地blast库"><a href="#构建本地blast库" class="headerlink" title="构建本地blast库"></a>构建本地blast库</h3>例如要构建核酸库，使用整个CDS构建的基因序列库<pre><code>makeblastdb -in &quot;CDS文件&quot; -dbtype &quot;nucl&quot; -parse_seqids -out &quot;库名称的前缀&quot;
+</code></pre>具体参数的意义可以使用 -help参数查看手册，我就不多做赘述<br>同理构建蛋白库<pre><code>makeblastdb -in &quot;氨基酸序列文件&quot;  -dbtype &quot;prot&quot; -parse_seqids -out &quot;库名称的前缀&quot;
+</code></pre><h3 id="进行序列比对"><a href="#进行序列比对" class="headerlink" title="进行序列比对"></a>进行序列比对</h3></li>
+<li>首先我们需要准备比对的fasta文件，然后一条命令就可以了<pre><code>blastn -query &quot;需要比对的文件&quot; -db &quot;上一步建好的库的目录加上/库前缀&quot;  -evalue 1e-5 -outfmt 6 -out &quot;输出文件&quot;
+</code></pre></li>
 </ul>
 <ol>
 <li>这里的outfmt是输出文件的格式，包括1-10种格式</li>

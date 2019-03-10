@@ -213,7 +213,32 @@ f(x)=X2+4x要求它的极值，主要就是求偏导为0的那个点的坐标像
 <p>X <sub>i+1</sub>=X <sub>i</sub>+a*f(x)<sup>‘</sup></p>
 </blockquote>
 <p>a为步长控制更新的幅度，当函数值无限逼近极值点时停止迭代过程</p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#coding=UTF-8</span><br><span class="line"><span class="string">''</span><span class="string">'</span></span><br><span class="line"><span class="string">梯度上升算法的简单实现</span></span><br><span class="line"><span class="string">原函数</span></span><br><span class="line"><span class="string">f(x)=x2+4x</span></span><br><span class="line"><span class="string">'</span><span class="string">''</span></span><br><span class="line">def Gradient():</span><br><span class="line">	##定义导函数</span><br><span class="line">	def gradientPrim(X):</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-2</span>*X+<span class="number">4</span></span><br><span class="line">	x_old=<span class="number">1</span></span><br><span class="line">	x_new=<span class="number">0</span></span><br><span class="line">	###控制步长度</span><br><span class="line">	alpha=<span class="number">0.01</span> </span><br><span class="line">	#####控制梯度阈值</span><br><span class="line">	presision=<span class="number">0.0000001</span></span><br><span class="line">	<span class="keyword">while</span> abs(x_new-x_old)&gt;presision:</span><br><span class="line">		x_old=x_new</span><br><span class="line">		#将提升后的值代入导函数求得新的坐标点；</span><br><span class="line">		#当导函数无限的笔记0的时候，x_old与x_new也就无限逼近了</span><br><span class="line">		x_new=x_old+alpha*gradientPrim(x_old)</span><br><span class="line"></span><br><span class="line">	print(x_new)</span><br><span class="line"></span><br><span class="line">Gradient()</span><br></pre></td></tr></table></figure>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><pre><code class="JavaScript">#coding=UTF-8
+&#39;&#39;&#39;
+梯度上升算法的简单实现
+原函数
+f(x)=x2+4x
+&#39;&#39;&#39;
+def Gradient():
+    ##定义导函数
+    def gradientPrim(X):
+        return -2*X+4
+    x_old=1
+    x_new=0
+    ###控制步长度
+    alpha=0.01 
+    #####控制梯度阈值
+    presision=0.0000001
+    while abs(x_new-x_old)&gt;presision:
+        x_old=x_new
+        #将提升后的值代入导函数求得新的坐标点；
+        #当导函数无限的笔记0的时候，x_old与x_new也就无限逼近了
+        x_new=x_old+alpha*gradientPrim(x_old)
+
+    print(x_new)
+
+Gradient()
+</code></pre>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
 <p>梯度上升与梯度下降算法主要的一个思想</p>
 <ul>
