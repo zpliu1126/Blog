@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[js基础]]></title>
+    <url>%2FBlog%2Farchives%2F6890f50f.html</url>
+    <content type="text"><![CDATA[函数 this对象转换函数对象的apply()、call()方法与fun()调用效果是一样的，不同之处在于 使用fun()调用时，fun是windows的方法 而是用call与apply调用时，使用将fun方法赋给了对应的对象中 function fun(){ alert(this.name); } var obj1={name:&quot;obj1&quot;}; ###输出为空windows对象没有name属性 fun(); ###输出obj1 fun.call(obj1); fun.apply(obj1); 用call与apply将函数赋给对应的对象后，如果函数需要参数只需在后面加上对应的参数就行 apply中传递参数的时候需要数组进行传递call中不需要，直接单个单个传入 function fun(a,b){ alert(a+b); } var obj1={name:&quot;obj1&quot;,a:1,b:2}; fun(2,3); #######参数进行传递 fun.call(obj1,1,1); fun.apply(obj1,[5,6]); 函数参数arguments arguments是一种类数组结构，里面保留了传递给函数的实参 function fun(){ console.log(arguments.length); } fun(&quot;hello&quot;,&quot;2&quot;); ###打印为2 使用arguments对象中的实参我们也可以通过使用arguments[0]、arguments[1]等在函数中直接使用，而不使用形参；但这种方法比较麻烦 arguments的callee属性等于当前执行的函数对象 function fun(){ console.log(arguments.callee==fun ); } ###arguments的函数对象为fun返回true fun() Date构造函数 当新建一个Date对象的时候，打印的为创建Date对象的时间 #####Sat Mar 16 2019 11:44:23 GMT+0800 (中国标准时间)# ##创建对象时间 var d=new Date() console.log(d) 指定时间进行创建使用参数赋值给Date对象；格式为： 月份/日/年 空格 时:分:秒 Date的主要方法 实践一个时钟方法 function startTime(){ var now=new Date(); var hours=now.getHours(); var minute=now.getMinutes(); var second=now.getSeconds(); if(minute]]></content>
+      <categories>
+        <category>computerLanguage</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[sed awk的奇技淫巧]]></title>
     <url>%2FBlog%2Farchives%2F34076904.html</url>
     <content type="text"><![CDATA[字符串 substr截取字符串长度 &gt;&gt;echo aaabbbcc |awk &#39;{print substr($1,2)}&#39; &gt;&gt;aabbbcc 第一个参数 截取的字段第二个截取的起始位置，默认下标从1开始第三个参数是指定截取的长度 gsub替换字符串 ###不使用正则 &gt;&gt;echo aaabbbcc |awk &#39;gsub(&quot;a&quot;,&quot;e&quot;,$1){print}&#39; &gt;&gt;eeebbbcc ###使用正则 &gt;&gt;echo aaabbbcc |awk &#39;gsub(/aa/,&quot;e&quot;,$1){print}&#39; &gt;&gt;eabbbcc 这与sed ‘s///g’的手法大同小异默认全局替换，也就是整个字段进行替换 统计 对出现的行的数目进行统计使用awk中的关联数组 &gt;&gt;awk &#39;{a[$1]+=1}END{for(i in a)print a[i];}&#39; 从代码中我们也可以看出使用关联数组来统计某一字段出现的次数； 延伸一下，我们通常需要找两个文件共同的基因，我通常的做法是使用 sort 加uniq -d 这样可以快速的找打两个文件中重复基因；但有多个文件的时候怎么办呢？这时候就可以考虑使用awk关联数组的办法了，使用cat合并文件之后统计基因出现的次数等于文件数目，也就找出来多个文件中共有的基因啦!]]></content>
