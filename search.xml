@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Circos基础]]></title>
+    <url>%2FBlog%2Farchives%2Fc5b1c714.html</url>
+    <content type="text"><![CDATA[quickly start文件目录结构如下 首先circos中数据与代码相互分离，方便代码非管理；同时代码也可以实现重复利用 主要的配置写在circos.conf文件中，其他的配置文件是关于图片其他组件的配置；只需要在circos主配置文件中引入即可 circos在画图时首先从当前路径搜索配置文件，如果没有找到，会到circos软件包所在路径进行配置文件的搜索##相关配置文件etc/housekeeping.conf可以修改设定 CWD/ CWD/etc CWD/data CWD/../ CWD/../etc CWD/../data CWD/../.. CWD/../../etc CWD/../../data 有了配置文件接下来circos同样会在当前目录搜索对应的数据文件、配置文件；中如何引用其他文件如下 ##circos.conf引用其他配置文件 &lt;&lt;include etc/colors_fonts_patterns.conf&gt;&gt; &lt;&lt;include etc/housekeeping.conf&gt;&gt; ##circos.conf引用柱状图数据文件 &lt;plots&gt; &lt;plot&gt; type=histogram file=data/Dthighlight.txt fill_color=rgb(249,105,14) &lt;/plot&gt; &lt;/plots&gt;]]></content>
+      <categories>
+        <category>Bioinformatic</category>
+      </categories>
+      <tags>
+        <tag>Circos学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[sgRNAcase9]]></title>
+    <url>%2FBlog%2Farchives%2F4df5c5ce.html</url>
+    <content type="text"><![CDATA[去除脱靶的sgRNAawk -F &quot;\t&quot; &#39;{a=substr($1,1,15);a1=substr($1,6,1);a2=substr($1,7,2);b1=substr($5,6,1);b2=substr($5,7,2)}{q if(a==$8)print $0&quot;\t&quot;0;else if(a1==&quot;A&quot;&amp;&amp;b1==&quot;D&quot;){if(a2==b2||a2==&quot;02&quot;&amp;&amp;b2==03||a2==&quot;03&quot;&amp;&amp;b2==&quot;02&quot;){print $0&quot;\t&quot;0;}else print $0&quot;\t&quot;1;}else if(a1==&quot;D&quot;&amp;&amp;b1==&quot;A&quot;){if(a2==b2||a2==&quot;02&quot;&amp;&amp;b2==&quot;03&quot;||a2==&quot;03&quot;&amp;&amp;b2==&quot;02&quot;){print $0&quot;\t&quot;0;}else print $0&quot;\t&quot;1;}else print $0&quot;\t&quot;1;}&#39; Best_Repeat_Low_OT_gtf 靶向目标基因的基因]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[js基础]]></title>
     <url>%2FBlog%2Farchives%2F6890f50f.html</url>
     <content type="text"><![CDATA[函数 this对象转换函数对象的apply()、call()方法与fun()调用效果是一样的，不同之处在于 使用fun()调用时，fun是windows的方法 而是用call与apply调用时，使用将fun方法赋给了对应的对象中 function fun(){ alert(this.name); } var obj1={name:&quot;obj1&quot;}; ###输出为空windows对象没有name属性 fun(); ###输出obj1 fun.call(obj1); fun.apply(obj1); 用call与apply将函数赋给对应的对象后，如果函数需要参数只需在后面加上对应的参数就行 apply中传递参数的时候需要数组进行传递call中不需要，直接单个单个传入 function fun(a,b){ alert(a+b); } var obj1={name:&quot;obj1&quot;,a:1,b:2}; fun(2,3); #######参数进行传递 fun.call(obj1,1,1); fun.apply(obj1,[5,6]); 函数参数arguments arguments是一种类数组结构，里面保留了传递给函数的实参 function fun(){ console.log(arguments.length); } fun(&quot;hello&quot;,&quot;2&quot;); ###打印为2 使用arguments对象中的实参我们也可以通过使用arguments[0]、arguments[1]等在函数中直接使用，而不使用形参；但这种方法比较麻烦 arguments的callee属性等于当前执行的函数对象 function fun(){ console.log(arguments.callee==fun ); } ###arguments的函数对象为fun返回true fun() Date构造函数 当新建一个Date对象的时候，打印的为创建Date对象的时间 #####Sat Mar 16 2019 11:44:23 GMT+0800 (中国标准时间)# ##创建对象时间 var d=new Date() console.log(d) 指定时间进行创建使用参数赋值给Date对象；格式为： 月份/日/年 空格 时:分:秒 Date的主要方法 实践一个时钟方法 function startTime(){ var now=new Date(); var hours=now.getHours(); var minute=now.getMinutes(); var second=now.getSeconds(); if(minute]]></content>
@@ -14,7 +30,7 @@
   <entry>
     <title><![CDATA[sed awk的奇技淫巧]]></title>
     <url>%2FBlog%2Farchives%2F34076904.html</url>
-    <content type="text"><![CDATA[字符串 substr截取字符串长度 &gt;&gt;echo aaabbbcc |awk &#39;{print substr($1,2)}&#39; &gt;&gt;aabbbcc 第一个参数 截取的字段第二个截取的起始位置，默认下标从1开始第三个参数是指定截取的长度 gsub替换字符串 ###不使用正则 &gt;&gt;echo aaabbbcc |awk &#39;gsub(&quot;a&quot;,&quot;e&quot;,$1){print}&#39; &gt;&gt;eeebbbcc ###使用正则 &gt;&gt;echo aaabbbcc |awk &#39;gsub(/aa/,&quot;e&quot;,$1){print}&#39; &gt;&gt;eabbbcc 这与sed ‘s///g’的手法大同小异默认全局替换，也就是整个字段进行替换 统计 对出现的行的数目进行统计使用awk中的关联数组 &gt;&gt;awk &#39;{a[$1]+=1}END{for(i in a)print a[i];}&#39; 从代码中我们也可以看出使用关联数组来统计某一字段出现的次数； 延伸一下，我们通常需要找两个文件共同的基因，我通常的做法是使用 sort 加uniq -d 这样可以快速的找打两个文件中重复基因；但有多个文件的时候怎么办呢？这时候就可以考虑使用awk关联数组的办法了，使用cat合并文件之后统计基因出现的次数等于文件数目，也就找出来多个文件中共有的基因啦!]]></content>
+    <content type="text"><![CDATA[字符串 substr截取字符串长度 &gt;&gt;echo aaabbbcc |awk &#39;{print substr($1,2)}&#39; &gt;&gt;aabbbcc 第一个参数 截取的字段第二个截取的起始位置，默认下标从1开始第三个参数是指定截取的长度 gsub替换字符串 ###不使用正则 &gt;&gt;echo aaabbbcc |awk &#39;gsub(&quot;a&quot;,&quot;e&quot;,$1){print}&#39; &gt;&gt;eeebbbcc ###使用正则 &gt;&gt;echo aaabbbcc |awk &#39;gsub(/aa/,&quot;e&quot;,$1){print}&#39; &gt;&gt;eabbbcc 这与sed ‘s///g’的手法大同小异默认全局替换，也就是整个字段进行替换 统计 对出现的行的数目进行统计使用awk中的关联数组 &gt;&gt;awk &#39;{a[$1]+=1}END{for(i in a)print a[i];}&#39; 从代码中我们也可以看出使用关联数组来统计某一字段出现的次数； 延伸一下，我们通常需要找两个文件共同的基因，我通常的做法是使用 sort 加uniq -d 这样可以快速的找打两个文件中重复基因；但有多个文件的时候怎么办呢？这时候就可以考虑使用awk关联数组的办法了，使用cat合并文件之后统计基因出现的次数等于文件数目，也就找出来多个文件中共有的基因啦! awk -F “\t” ‘{a=substr($1,1,15);b=substr($1,6,3);c=substr($8,6,3)}{if(a==$8){print $0”\t”0;}else if()}’ Best_Repeat_Low_OT_gtf|less]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -138,7 +154,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Circos其实很简单]]></title>
+    <title><![CDATA[Circos进阶]]></title>
     <url>%2FBlog%2Farchives%2F87ef918.html</url>
     <content type="text"><![CDATA[ideogram间距有两种设置方法 所有ideogram同时设置，在spacing标签内使用default属性 对相邻的两条进行设置，在pairwise中进行设置 &lt;ideogram&gt; &lt;spacing&gt; default = 10u &lt;pairwise hs1&gt; spacing = 5u &lt;/pairwise&gt; &lt;pairwise hs3 hs4&gt; spacing = 0.25r &lt;/pairwise&gt; &lt;/spacing&gt; &lt;/ideogram&gt; 颜色设置 在colors标签内自定义颜色 ##在mycolors.conf中定义 Atcolor=25,181,254 Acolor=0,230,64 Dtcolor=240,255,0 Dcolor=242,38,19 ## 在主文件circos.conf的colors标签内引用 &lt;colors&gt; &lt;&lt;include mycolors.conf&gt;&gt; &lt;/colors&gt; 自定义的颜色就可以使用了，例如我使用自定义颜色修饰染色体 chr - At02 At02 0 108049532 Atcolor chr - Dt13 Dt13 0 63316526 Dtcolor chr - A02 A02 0 99090824 Acolor chr - D12 D12 0 35429946 Dcolor 在circos.conf中使用rgb()函数自定义颜色， &lt;link&gt; file=data/At_AC.txt radius=0.95r bezider_radius=1.5r thickness=3 color=rgb(140,20,252) z=20 &lt;/link&gt; links让color颜色与第二个连接点的颜色相同 color=eval(var(chr2)) eval函数与大多数语言中的功能类似，在bash中eval会执行字符串表示的命令 link有时候会缠绕在一块就像下面这样这时候只需要把对应的染色体翻转一下就行啦！ chromosomes_reverse=At13;D04;D11;D10;D09;A07;A05;A08; ###两条线交叉的时候可以考虑把染色体顺序换一下 chromosomes_order=At01,At02,At03,At04,At05,At06, link中的rule规则 取从哪条染色体开始 &lt;rule&gt; condition=from(Chr03) color=rgb(247,202,24) &lt;/rule&gt; ###到哪条染色体结束 &lt;rule&gt; condition=to(Chr03) color=rgb(247,202,24) &lt;/rule&gt; 给不同的link上色，在数据文件中就事先区分好数据文件如下 chr10class4 1 10000 chr20class4 1 10000 value=class4_1 chr10class3 7250 7260 chr20class3 7250 72600 value=class3_3 同过value变量进行自定义上色 &lt;rule&gt; condition= var(value) eq &quot;class1_1&quot; color=red &lt;/rule&gt; 这里有一定需要注意，这和perl中的判断一样：字符串使用 eq 数字使用==，我在这里就犯错了 link如何弯曲控制曲线的弯曲程度有多个参数，其中一个是bezier_radius bezier_radius=1.0r 添加注释信息例如在染色体对应的位置添加对应的基因编号信息,首先得准备对应的数据文件text.txt A02 38395050 38401512 Ga02G0753.1 A05 916845 922879 Ga05G0093.1 A05 929480 933564 Ga05G0095.1 A05 977266 983344 Ga05G0100.1 A05 14673170 14690147 Ga05G1638.1 A06 56575979 56582045 Ga06G1315.1 在circos.conf中的plots标签内定义type=text &lt;plots&gt; type=text r0=1.05r r1=1.1r+400p show_links=yes link_dims=4p,4p,8p,4p,4p link_thickness=2p label_size=24p color=red label_font=condensed padding=0p rpadding=0p &lt;plot&gt; file=data/textAt.txt color=rgb(25,181,254) &lt;/plot&gt; &lt;/plots&gt; 具体参数的意义: histogram柱状图 数据文件格式如下：染色体位置+柱状图的大小 CA_chr1 109361328 109659167 9 CA_chr1 137401104 137443513 8 CA_chr1 134830783 135785508 48 CA_chr1 135908705 136353163 24 CA_chr1 61257167 61388884 8 CA_chr1 56197340 56261821 6 CA_chr1 117275800 117755122 12 CA_chr1 123325601 123882451 8 CA_chr1 58923028 59194595 8 CA_chr1 47239752 47399584 7 CA_chr1 66213515 67537745 49 有时候为了让边框没有颜色，可以考虑把thickness设置为0 &lt;plots&gt; r0=0.9r r1=0.97r color=red thickness=0 &lt;plot&gt; type=histogram file=data/Ahighlight.txt fill_color=rgb(255,203,5) &lt;/plot&gt;]]></content>
       <categories>
