@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Circos基础]]></title>
     <url>%2FBlog%2Farchives%2Fc5b1c714.html</url>
-    <content type="text"><![CDATA[quickly start文件目录结构如下 首先circos中数据与代码相互分离，方便代码非管理；同时代码也可以实现重复利用 主要的配置写在circos.conf文件中，其他的配置文件是关于图片其他组件的配置；只需要在circos主配置文件中引入即可 circos在画图时首先从当前路径搜索配置文件，如果没有找到，会到circos软件包所在路径进行配置文件的搜索##相关配置文件etc/housekeeping.conf可以修改设定 CWD/ CWD/etc CWD/data CWD/../ CWD/../etc CWD/../data CWD/../.. CWD/../../etc CWD/../../data 有了配置文件接下来circos同样会在当前目录搜索对应的数据文件、配置文件；中如何引用其他文件如下 ##circos.conf引用其他配置文件 &lt;&lt;include etc/colors_fonts_patterns.conf&gt;&gt; &lt;&lt;include etc/housekeeping.conf&gt;&gt; ##circos.conf引用柱状图数据文件 &lt;plots&gt; &lt;plot&gt; type=histogram file=data/Dthighlight.txt fill_color=rgb(249,105,14) &lt;/plot&gt; &lt;/plots&gt;]]></content>
+    <content type="text"><![CDATA[quickly start 文件目录结构 首先circos中数据与代码相互分离，方便代码非管理；同时代码也可以实现重复利用 主要的配置写在circos.conf文件中，其他的配置文件是关于图片其他组件的配置；只需要在circos主配置文件中引入即可 circos在画图时首先从当前路径搜索配置文件，如果没有找到，会到circos软件包所在路径进行配置文件的搜索##相关配置文件etc/housekeeping.conf可以修改设定 CWD/ CWD/etc CWD/data CWD/../ CWD/../etc CWD/../data CWD/../.. CWD/../../etc CWD/../../data 有了配置文件接下来circos同样会在当前目录搜索对应的数据文件、配置文件；中如何引用其他文件如下 ##circos.conf引用其他配置文件 &lt;&lt;include etc/colors_fonts_patterns.conf&gt;&gt; &lt;&lt;include etc/housekeeping.conf&gt;&gt; ##circos.conf引用柱状图数据文件 &lt;plots&gt; &lt;plot&gt; type=histogram file=data/Dthighlight.txt fill_color=rgb(249,105,14) &lt;/plot&gt; &lt;/plots&gt;]]></content>
       <categories>
         <category>Bioinformatic</category>
       </categories>
