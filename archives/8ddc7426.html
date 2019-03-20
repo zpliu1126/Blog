@@ -1,0 +1,101 @@
+<!DOCTYPE HTML><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"><meta http-equiv="Cache-Control" content="no-siteapp"><meta http-equiv="Cache-Control" content="no-transform"><meta name="renderer" content="webkit|ie-comp|ie-stand"><meta name="apple-mobile-web-app-capable" content="ZpliuBlog"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="format-detection" content="telephone=no,email=no,adress=no"><meta name="browsermode" content="application"><meta name="screen-orientation" content="portrait"><link rel="dns-prefetch" href="https://zpliu1126.github.io/Blog"><meta name="keywords" content><meta name="description" content="基本概念决策树是一种基本的分类与回归，我们可以把决策树看成一个if-then规则；通过对数据集中属性进行判断，从而将数据打上对应的标签；这也是有监督学习的一种
+流程
+收集数据
+整理数据，将数据按..."><meta name="robots" content="all"><meta name="google" content="all"><meta name="googlebot" content="all"><meta name="verify" content="all"><title>决策树 | ZpliuBlog</title><link rel="alternate" href="/atom.xml" title="ZpliuBlog" type="application/atom+xml"><link rel="icon" href="/Blog/img/candy.ico"><link rel="stylesheet" href="https://jjeejj.github.io/js/gitment.js.css"><link rel="stylesheet" href="/Blog/css/bootstrap.min.css?rev=3.3.7"><link rel="stylesheet" href="/Blog/css/font-awesome.min.css?rev=4.5.0"><link rel="stylesheet" href="/Blog/css/style.css?rev=@@hash"><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c0aba222dfddfe9f70bd4a3d5bc43424";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script>!function(e,a,t,n,g,c,o){e.GoogleAnalyticsObject=g,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),o=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",o.parentNode.insertBefore(c,o)}(window,document,"script",0,"ga"),ga("create","UA-135921626-1","auto"),ga("send","pageview")</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css"><script type="text/javascript" src="/Blog/js/jquery-1.11.1.min.js"></script><link rel="stylesheet" href="/Blog/js/google-code-prettify/TranquilHeart.css" type="text/css"><script src="/Blog/js/google-code-prettify/prettify.js" type="text/javascript"></script></head></html><!--[if lte IE 8]><style>
+    html{ font-size: 1em }
+</style><![endif]--><!--[if lte IE 9]><div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div><![endif]--><body><script type="text/javascript" src="/Blog/js/click.js"></script><script type="text/javascript" src="/Blog/js/img.js"></script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><nav class="main-navigation"><div class="container"><div class="row"><div class="col-sm-12"><div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav"><span class="sr-only"></span><i class="fa fa-bars"></i></span> <a class="navbar-brand" href="https://zpliu1126.github.io/Blog">ZpliuBlog</a></div><div class="collapse navbar-collapse" id="main-menu"><ul class="menu"><li role="presentation" class="text-center"><a href="/Blog"><i class="fa"></i> 首页</a></li><li role="presentation" class="text-center"><a href="/Blog/categories/computerLanguage/"><i class="fa"></i> 计算机程序</a></li><li role="presentation" class="text-center"><a href="/Blog/categories/Bioinformatic/"><i class="fa"></i> Bioinformatic</a></li><li role="presentation" class="text-center"><a href="/Blog/categories/MachineLearning"><i class="fa"></i> 机器学习算法</a></li></ul></div></div></div></div></nav><section class="content-wrap"><div class="container"><div class="row"><main class="col-md-8 main-content m-post"><p id="process"></p><article class="post"><div class="post-head"><h1 id="决策树">决策树</h1><div class="post-meta"><span class="categories-meta fa-wrap"><i class="fa fa-folder-open-o"></i></span><span class="fa-wrap"><i class="fa fa-tags"></i><span class="tags-meta"></span></span><span class="fa-wrap"><i class="fa fa-clock-o"></i> <span class="date-meta">2019/03/20</span></span><span class="fa-wrap"><i class="fa fa-eye"></i><span id="busuanzi_value_page_pv"></span></span></div></div><div class="post-body post-content"><h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>决策树是一种基本的分类与回归，我们可以把决策树看成一个if-then规则；通过对数据集中属性进行判断，从而将数据打上对应的标签；这也是有监督学习的一种</p><h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ul><li>收集数据</li><li>整理数据，将数据按照一定的规则整理、排版</li><li>分析数据，构造决策树使用简单数据集，检查决策树是否符合预期</li><li>训练算法，使用你准备的数据集中的一部分数据，进行训练，构造出决策树数据结构</li><li>测试算法</li><li>使用算法</li></ul><h1 id="构造数据集"><a href="#构造数据集" class="headerlink" title="构造数据集"></a>构造数据集</h1><pre><code>def creatDataSet():
+    dataSet = [[0, 0, 0, 0, &#39;no&#39;],
+               [0, 0, 0, 1, &#39;no&#39;],
+               [0, 1, 0, 1, &#39;yes&#39;], 
+               [0, 1, 1, 0, &#39;yes&#39;],
+               [0, 0, 0, 0, &#39;no&#39;],
+               [1, 0, 0, 0, &#39;no&#39;],
+               [1, 0, 0, 1, &#39;no&#39;],
+               [1, 1, 1, 1, &#39;yes&#39;],
+               [1, 0, 1, 2, &#39;yes&#39;],
+               [1, 0, 1, 2, &#39;yes&#39;],
+               [2, 0, 1, 2, &#39;yes&#39;],
+               [2, 0, 1, 1, &#39;yes&#39;],
+               [2, 1, 0, 1, &#39;yes&#39;],
+               [2, 1, 0, 2, &#39;yes&#39;],
+               [2, 0, 0, 0, &#39;no&#39;]]
+    labels = [&#39;年龄&#39;, &#39;有工作&#39;, &#39;有自己的房子&#39;, &#39;信贷情况&#39;]
+    return dataSet, labels  
+</code></pre><h1 id="信息熵计算"><a href="#信息熵计算" class="headerlink" title="信息熵计算"></a>信息熵计算</h1><pre><code>def calcShannonEnt(dataset):
+    numEntires=len(dataset) #数据集的大小
+    labelCount={}             #统计每一种分类对应的数目
+    for featVec in dataset:
+        currentLabel=featVec[-1] #分类标签
+        if currentLabel not in labelCount:
+            labelCount[currentLabel] = 0
+        labelCount[currentLabel]+=1
+    shannonEnt=0.0 
+    for key in labelCount:
+        prob=float(labelCount[key])/numEntires #计算权重使用float函数产生小数
+        shannonEnt-=prob*log(prob,2)
+    return shannonEnt
+</code></pre><h1 id="寻找最优特征"><a href="#寻找最优特征" class="headerlink" title="寻找最优特征"></a>寻找最优特征</h1><ul><li>遍历每一个属性</li><li>找到每一个属性对应值的子集D1、D2、D3</li><li>计算每个属性下的信息增益</li><li>找到当前数据集下，最优的分类属性</li></ul><pre><code>##找到对应的特征为value的行，将这个属性清除作为下一个子集D1
+def splitDataSet(dataSet,axis,value):
+    reDataSet=[]
+    for featVec in dataSet:
+        if featVec[axis]==value:
+            reduceFeatVec=featVec[:axis]
+            reduceFeatVec.extend(featVec[axis+1:])
+            reDataSet.append(reduceFeatVec)
+    return reDataSet
+
+#######找到当前数据集下，最优的分类属性
+def chooseBestFeatureToSplit(dataset):
+    numfeatures=len(dataset[0])-1       ##准备遍历每一个属性
+    baseEntropy=calcShannonEnt(dataset) ##初始信息熵
+    bestInfoGain=0.0                     ##最大信息增益
+    bestFeature=-1                        ##记录最优属性下标    
+    for i in range(numfeatures):
+        featList=[examp[i] for examp in dataset] #获得单个属性的所有值
+        uniqVals=set(featList)     #去重，基于属性值分为子集D1、D2、D3
+        newEntrop=0.0           #每种属性对应的信息熵
+        for value in  uniqVals:
+            subsDataSet=splitDataSet(dataset,i,value)
+            prob=len(subsDataSet)/float(len(dataset)) #子集占数据集权重
+            newEntrop+=prob*calcShannonEnt(subsDataSet) #将子集信息熵累加
+        inforGain=baseEntropy -newEntrop   #信息增益
+        if(inforGain&gt;bestInfoGain):
+            bestInfoGain=inforGain
+            bestFeature=i         #找到最优属性的下标
+    return bestFeature
+
+</code></pre><h1 id="构造决策树"><a href="#构造决策树" class="headerlink" title="构造决策树"></a>构造决策树</h1><pre><code>##当没有有意义的属性或者所有的属性都用完之后还没分开时，使用数目最多的那一类标签
+def majorityCnt(classList):
+    classcount={}
+    for vote in classList:
+        if vote not in classcount.keys():
+            classcount[vote]=0
+        classcount[vote]+=1
+    sortclasscount=sorted(classcount.items(),key=operator.itemgetter(1),reverse=True) #对大小倒序输出
+    return sortclasscount[0][0]
+
+
+##构造决策树
+def creatTree(dataset,labels,featLabels): #dataset初始数据集 labels属性名称 featLabels决策树找出的分类属性
+    classList=[example[-1] for example in dataset]  #获取监督标签
+    if classList.count(classList[0])==len(classList): #当数据集中标签相同时，停止分类
+        return classList[0]
+    if len(dataset[0])==1 or len(labels)==0: #没有可以分类的属性，或者属性都用完之后
+        return majorityCnt(classList)
+    bestFeat=chooseBestFeatureToSplit(dataset) #获取最优属性
+    bestlabel=labels[bestFeat]  ##最优属性的名字
+    featLabels.append(bestlabel) ##添加到输出结果中
+    myTree={bestlabel:{}}  ##构造树形字典，键为最优属性名字，值为子树
+    del(labels[bestFeat])  #从属性名列表中删除，已经找到的
+    featValues=[example[bestFeat] for example in dataset]
+    uniqueValues=set(featValues)
+    for value in uniqueValues:
+        myTree[bestlabel][value]=creatTree(splitDataSet(dataset,bestFeat,value),labels,featLabels) #从最优属性的子集D1、D2、D3中再分别得到第二优的属性...
+    return myTree
+###############################
+dataset,labels=creatDataSet()
+featLabels=[]
+myTree=creatTree(dataset,labels,featLabels)
+print(myTree)
+print(featLabels)
+</code></pre><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://cuijiahua.com/blog/2017/11/ml_2_decision_tree_1.html" target="_blank" rel="noopener">https://cuijiahua.com/blog/2017/11/ml_2_decision_tree_1.html</a><br><a href="https://cuijiahua.com/blog/2017/11/ml_3_decision_tree_2.html" target="_blank" rel="noopener">https://cuijiahua.com/blog/2017/11/ml_3_decision_tree_2.html</a></p></div><div class="post-footer"><div>转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">zpliu1126</a></div><div></div></div></article><div class="article-nav prev-next-wrap clearfix"><a href="/Blog/archives/776e0022.html" class="next-post btn btn-default" title="python矩阵操作"><span class="hidden-lg">下一篇</span> <span class="hidden-xs">python矩阵操作</span><i class="fa fa-angle-right fa-fw"></i></a></div><div id="comments"><script type="text/javascript" src="https://jjeejj.github.io/js/gitment.js"></script><script>var gitment=new Gitment({id:window.location.pathname,owner:"zpliu1126",repo:"Blog",oauth:{client_id:"97dfe3c974f3eeff4f04",client_secret:"ba7ca4ab8feef4fa0899c684a2cd00284500cbe3"},perPage:"10"});gitment.render("comments")</script></div></main><aside id="article-toc" role="navigation" class="col-md-4"><div class="widget"><h3 class="title">文章目录</h3><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#流程"><span class="toc-text">流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构造数据集"><span class="toc-text">构造数据集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#信息熵计算"><span class="toc-text">信息熵计算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#寻找最优特征"><span class="toc-text">寻找最优特征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构造决策树"><span class="toc-text">构造决策树</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol></div></aside></div></div></section><footer class="main-footer"><div class="container"><div class="row"></div></div></footer><a id="back-to-top" class="icon-btn hide"><i class="fa fa-chevron-up"></i></a><span class="Bigimglocation"></span><div id="copyrightPosition" class="copyright"><div class="container"><div class="row"><div class="col-sm-12"><div class="busuanzi"><font color="#CF0E0E"><span class="glyphicon glyphicon glyphicon-heart" aria-hidden="true"></span></font> Visited:<strong id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></strong> &nbsp; | &nbsp; Visitor:<strong id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></strong></div></div><div class="col-sm-12"><span>Copyright &copy; 2019</span> | <span>Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a></span> | <span>Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a></span></div></div></div></div><script>$(window).load(function(){$("pre").addClass("prettyprint linenums").attr("style","overflow:auto;"),prettyPrint(),$("table").toggleClass("table table-hover table-bordered table-striped")})</script><script src="/Blog/assets/tagcanvas.min.js?rev=2.9"></script><script>var tagOption={textColour:"#444",outlineMethod:"block",outlineColour:"#FFDAB9",interval:30,textHeight:13,outlineRadius:3,freezeActive:!0,frontSelect:!0,initial:[.1,-.1],depth:.5,decel:.95,maxSpeed:.03,reverse:!0,fadeIn:500,wheelZoom:""};TagCanvas.Start("tag-cloud-3d","",tagOption)</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="/Blog/js/app.js?rev=@@hash"></script><script src="/Blog/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/Blog/live2dw/assets/z16.model.json"},display:{position:"right",width:150,height:300},mobile:{show:!1}})</script></body>
