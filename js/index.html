@@ -1,1 +1,17 @@
-<script src="/Blog/js/jquery-1.11.1.min.js"></script><button type id="button">button</button><script>btn=document.getElementById("button"),btn.onclick=function(){alert("sddsa")},$("#button").click(function(){alert("gg")})</script>
+<script src="/Blog/js/jquery-1.11.1.min.js"></script>
+<button type id="button">button</button>
+<script>
+var a=[1,2,3,45,5,2]
+function remove(arry,item){
+    for(i=0;i<arry.length;i++){
+        if(arry[i]==item){
+            arry.splice(i,1)
+        }
+        else
+            continue;
+    }
+    return arry
+}
+alert(remove(a,2))
+
+</script>

@@ -19,8 +19,10 @@
     <meta name="keywords" content>
 
 
-    <meta name="description" content="家族基因聚类分析流程首先获取到各个物种中对应的基因编号，并且得到对应的基因序列、氨基酸序列
-序列保守性使用MEGA软件进行进化分析，提取各个物种中的氨基酸序列进行比对;MEGA中Alig by ...">
+    <meta name="description" content="问候信息/inc/user/unser-profile.php 
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+today = new Dat...">
 
 
 
@@ -32,7 +34,7 @@
     <!--Title-->
 
 
-<title>基因家族分析流程 | ZpliuBlog</title>
+<title>wordpres安装 | ZpliuBlog</title>
 
 
     <link rel="alternate" href="/atom.xml" title="ZpliuBlog" type="application/atom+xml">
@@ -187,16 +189,16 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="基因家族分析流程">
+        <h1 id="wordpres安装">
             
-	            基因家族分析流程
+	            wordpres安装
             
         </h1>
         <div class="post-meta">
     
         <span class="categories-meta fa-wrap">
             <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/Blog/categories/Bioinformatic/">Bioinformatic</a>
+            
         </span>
     
 
@@ -213,7 +215,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/03/12</span>
+            <span class="date-meta">2019/03/24</span>
         </span>
         
             <span class="fa-wrap">
@@ -228,16 +230,119 @@
     </div>
     
     <div class="post-body post-content">
-        <h2 id="家族基因聚类分析流程"><a href="#家族基因聚类分析流程" class="headerlink" title="家族基因聚类分析流程"></a>家族基因聚类分析流程</h2><p>首先获取到各个物种中对应的基因编号，并且得到对应的基因序列、氨基酸序列</p>
-<h3 id="序列保守性"><a href="#序列保守性" class="headerlink" title="序列保守性"></a>序列保守性</h3><p>使用MEGA软件进行进化分析，提取各个物种中的氨基酸序列进行比对;MEGA中Alig by ClustalW 子程序得到结果如下:<br><img class="pimg" src="/Blog/img/genefamily/MEGAAlign.png" width="80%" alt></p>
-<h2 id="进行聚类分析"><a href="#进行聚类分析" class="headerlink" title="进行聚类分析"></a>进行聚类分析</h2><p>使用上一步比对好的mas后缀输出文件，构建进化树<br><img class="pimg" src="/Blog/img/genefamily/phylogenetic.png" alt><br>构建好进化树就可以输出树形状格式了，文件后缀为nwk</p>
-<pre><code>(GhirD03G004880,Gorai.003G049300|CESA6),GhirA11G023630),);
-</code></pre><h3 id="iTOL画进化树"><a href="#iTOL画进化树" class="headerlink" title="iTOL画进化树"></a>iTOL画进化树</h3><p>具体的学习方法花个1个小时的时间，看官网的视频就很清楚啦<br>1.在cotrol面板中有所有的控制参数<br>2.当需要添加数据集的时候，需要点击对应的分子进行添加，添加之后可以在控制面板进行参数的设置<br>3.进行设置的时候可以使用粘贴功能<br><img class="pimg" src="/Blog/img/genefamily/iTOL.png" width="80%"></p>
-<blockquote>
-<p>最后大功告成</p>
-</blockquote>
-<p><img class="pimg" src="/Blog/img/genefamily/聚类.png" width="80%" alt></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.sohu.com/a/234226326_100112198" target="_blank" rel="noopener">颜色搭配</a><br><a href="http://www.flatuicolorpicker.com/purple-rgb-color-code" target="_blank" rel="noopener">颜色搭配2</a><br><a href="https://itol.embl.de/" target="_blank" rel="noopener">iTOL</a><br><a href="https://www.plob.org/article/14741.html" target="_blank" rel="noopener">Evolution进化树</a></p>
+        <h2 id="问候信息"><a href="#问候信息" class="headerlink" title="问候信息"></a>问候信息</h2><p>/inc/user/unser-profile.php </p>
+<pre><code>
+&lt;script type=&quot;text/javascript&quot;&gt;
+today = new Date();
+    var day;
+    var date;
+    var hello;
+    hour = new Date().getHours();
+    if (hour &lt; 6) {
+        hello = &#39; 凌晨好！ &#39;;
+    } else if (hour &lt; 9) {
+        hello = &#39; 早上好！&#39;;
+    } else if (hour &lt; 12) {
+        hello = &#39; 上午好！&#39;;
+    } else if (hour &lt; 14) {
+        hello = &#39; 中午好！ &#39;;
+    } else if (hour &lt; 17) {
+        hello = &#39; 下午好！ &#39;;
+    } else if (hour &lt; 19) {
+        hello = &#39; 傍晚好！&#39;;
+    } else if (hour &lt; 22) {
+        hello = &#39; 晚上好！ &#39;;
+    } else {
+        hello = &#39;夜深了！ &#39;;
+    }
+    function GetCookie(sName) {
+        var arr = document.cookie.match(new RegExp(&quot;(^| )&quot; + sName + &quot;=([^;]*)(;|$)&quot;));
+        if (arr != null) {
+            return unescape(arr[2])
+        };
+        return null;
+    }
+    var Guest_Name = decodeURIComponent(GetCookie(&#39;author&#39;));
+    var webUrl = webUrl;
+    if (Guest_Name != &quot;null&quot;) {
+        hello = Guest_Name + &#39; , &#39; + hello + &#39; 欢迎回来。&#39;;
+    }
+    document.write(&#39; &#39; + hello);&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;var d, s = &quot;&quot;;
+    var x = new Array(&quot;星期日&quot;, &quot;星期一&quot;, &quot;星期二&quot;, &quot;星期三&quot;, &quot;星期四&quot;, &quot;星期五&quot;, &quot;星期六&quot;);
+    d = new Date();
+    s += d.getFullYear() + &quot;年&quot; + (d.getMonth() + 1) + &quot;月&quot; + d.getDate() + &quot;日 &quot;;
+    s += x[d.getDay()];
+    document.writeln(s);&lt;/script&gt;
+</code></pre><h2 id="文章永久链接"><a href="#文章永久链接" class="headerlink" title="文章永久链接"></a>文章永久链接</h2><p>apache支持htaccess文件，修改httpd配置文件</p>
+<pre><code>&#39;&#39;&#39;修改AllowOverride 参数&#39;&#39;&#39;
+&lt;Directory &quot;/var/www/html&quot;&gt;
+AllowOverride All
+&lt;/Directory&gt;
+
+&#39;&#39;&#39;加载模块&#39;&#39;&#39;
+#wordpress 404 model
+LoadModule rewrite_module modules/mod_rewrite.so
+
+</code></pre><h2 id="图片文字环绕"><a href="#图片文字环绕" class="headerlink" title="图片文字环绕"></a>图片文字环绕</h2><p>修改style.css 中对应的类，添加float属性</p>
+<pre><code>.logo-site img, .logo-sites img {
+    width: 50px;
+    max-height: 50px;
+    float: left;
+}
+</code></pre><p>接着修改模板文件中的menu.php文件修改描述 </p>
+<pre><code>if ( is_front_page() || is_category() || is_home() ) : ?&gt;
+                            &lt;?php if (zm_get_option(&#39;logos&#39;)) { ?&gt;
+
+                                &lt;?php if ( zm_get_option(&#39;logo&#39;) ) { ?&gt;
+                                    &lt;a href=&quot;&lt;?php echo esc_url( home_url(&#39;/&#39;) ); ?&gt;&quot;&gt;&lt;img src=&quot;&lt;?php echo zm_get_option(&#39;logo&#39;); ?&gt;&quot; title=&quot;&lt;?php echo esc_attr( get_bloginfo( &#39;name&#39;, &#39;display&#39; ) ); ?&gt;&quot; alt=&quot;&lt;?php bloginfo( &#39;name&#39; ); ?&gt;&quot; rel=&quot;home&quot; /&gt;&lt;/a&gt;
+                                &lt;?php } ?&gt;
+
+                            &lt;a href=&quot;&lt;?php echo esc_url( home_url(&#39;/&#39;) ); ?&gt;&quot;&gt;&lt;h1 class=&quot;site-title&quot;&gt;&lt;?php bloginfo( &#39;name&#39; ); ?&gt;    &lt;/h1&gt;
+                            &lt;p class=&quot;site-description&quot;&gt;Good Ideal Power Excution&lt;!-- &lt;?php bloginfo( &#39;description&#39; ); ?&gt; --&gt;&lt;/p&gt;&lt;/a&gt;
+                            &lt;? php } ?&gt;
+</code></pre><h2 id="修改关于本站的居中选项"><a href="#修改关于本站的居中选项" class="headerlink" title="修改关于本站的居中选项"></a>修改关于本站的居中选项</h2><pre><code>/* 关于本站*/
+.about-img {
+    text-align: center;
+    background: url(http://www.zpliublog.club/wp-content/uploads/2019/03/background-300x169.png) center center no-repeat;
+    background-size: cover;
+    height: 120px;
+    margin: 0px 0 40px 0;
+}
+.about-img img {
+    width: 120px;
+    height: auto;
+    margin: 35px 0px 0 0;
+    padding: 2px;
+    border-radius: 50%;
+    border: 2px solid #f8f8f8;
+   text-align: center;
+}
+.about-name {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+</code></pre><h2 id="文章特色图片"><a href="#文章特色图片" class="headerlink" title="文章特色图片"></a>文章特色图片</h2><pre><code>http://zmingcx.com/automatically-adds-the-characteristic-images.html
+
+https://liuyanzhao.com/4507.html
+</code></pre><h2 id="美话标签云"><a href="#美话标签云" class="headerlink" title="美话标签云"></a>美话标签云</h2><h2 id="注册后页面跳转"><a href="#注册后页面跳转" class="headerlink" title="注册后页面跳转"></a>注册后页面跳转</h2><pre><code>https://www.ludou.org/wordpress-do-action-after-registration.html
+
+
+function auto_login_new_user( $user_id ) {
+  // 用户注册后自动登录
+  wp_set_current_user($user_id);
+  wp_set_auth_cookie($user_id);
+  // 这里跳转到 http://域名/about 页面，请根据自己的需要修改
+  wp_redirect( home_url().&#39;/wp-login.php&#39; ); 
+  exit;
+}
+</code></pre><h2 id="邀请码"><a href="#邀请码" class="headerlink" title="邀请码"></a>邀请码</h2><p>问题没有得到解决</p>
+<pre><code>https://www.itbulu.com/easy-invitation-codes.html
+</code></pre><h2 id="配图"><a href="#配图" class="headerlink" title="配图"></a>配图</h2><pre><code>http://www.sohu.com/a/206720121_473285
+</code></pre><h2 id="d代码高亮"><a href="#d代码高亮" class="headerlink" title="d代码高亮"></a>d代码高亮</h2><pre><code>https://themeforwp.net/archives/best-code-highlight-plugin/
+</code></pre><h2 id="人数统计"><a href="#人数统计" class="headerlink" title="人数统计"></a>人数统计</h2><pre><code>https://www.luoyechenfei.com/html/2630.html
+</code></pre><p><a href="http://www.wazhuti.com/2704.html" target="_blank" rel="noopener">使用域名访问</a><br><a href="https://www.fujieace.com/wordpress/themes/begin.html" target="_blank" rel="noopener">主题</a></p>
 
     </div>
     
@@ -255,15 +360,10 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/Blog/archives/34076904.html" class="pre-post btn btn-default" title="sed awk的奇技淫巧">
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">sed awk的奇技淫巧</span>
-        </a>
     
-    
-        <a href="/Blog/archives/3a6e9ae0.html" class="next-post btn btn-default" title="LDA线性判别分析">
+        <a href="/Blog/archives/82bdb349.html" class="next-post btn btn-default" title="mysql数据库">
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">LDA线性判别分析</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">mysql数据库</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -298,7 +398,7 @@
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#家族基因聚类分析流程"><span class="toc-text">家族基因聚类分析流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#序列保守性"><span class="toc-text">序列保守性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行聚类分析"><span class="toc-text">进行聚类分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iTOL画进化树"><span class="toc-text">iTOL画进化树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问候信息"><span class="toc-text">问候信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文章永久链接"><span class="toc-text">文章永久链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片文字环绕"><span class="toc-text">图片文字环绕</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改关于本站的居中选项"><span class="toc-text">修改关于本站的居中选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文章特色图片"><span class="toc-text">文章特色图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#美话标签云"><span class="toc-text">美话标签云</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册后页面跳转"><span class="toc-text">注册后页面跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#邀请码"><span class="toc-text">邀请码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配图"><span class="toc-text">配图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d代码高亮"><span class="toc-text">d代码高亮</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#人数统计"><span class="toc-text">人数统计</span></a></li></ol>
         
     </div>
 </aside>
