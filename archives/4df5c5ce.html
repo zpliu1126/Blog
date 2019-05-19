@@ -258,7 +258,7 @@
 </code></pre><blockquote>
 <p>一般性的命令</p>
 </blockquote>
-<pre><code>perl sgRNAcas9_3.0.5.pl -i hEMX1_example.txt -x 20 -l 40 -m 80 -g genome_example.fa -o b -t s -v w -n 5 -p 2&gt;log.txt
+<pre><code>perl sgRNAcas9_3.0.5.pl -i genes_end.fasta -x 20 -l 40 -m 60 -g Ghirsutum_genome.fasta -o b -t s -v l -n 5 -s -3 -e 33 -p /public/home/llpei/zpliu/zpliu/software/sgRNAcas9_3.0.5 2&gt;log.txt
 </code></pre><h2 id="提取对应等级的靶标ID"><a href="#提取对应等级的靶标ID" class="headerlink" title="提取对应等级的靶标ID"></a>提取对应等级的靶标ID</h2><blockquote>
 <p>Discard &gt; High_risk &gt; moderate_risk &gt; low_risk &gt; repeat_sites_or_bad ? &gt; Best<br>一般提取Best 、repeat_sites_or_bad ? 、low_risk等级的ID</p>
 </blockquote>
