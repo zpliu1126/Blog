@@ -308,7 +308,9 @@ else if(a1==&quot;A&quot;&amp;&amp;b1==&quot;D&quot;){
         else if(a1==&quot;D&quot;&amp;&amp;b1==&quot;A&quot;){
             if(a2==b2||a2==&quot;02&quot;&amp;&amp;b2==&quot;03&quot;||a2==&quot;03&quot;&amp;&amp;b2==&quot;02&quot;){
                 print $0&quot;\t&quot;0;}else print $0&quot;\t&quot;1;}
-else print $0&quot;\t&quot;1;}&#39; Best_Repeat_Low_OT_gtf
+else print $0&quot;\t&quot;1;}&#39; Best_Repeat_Low_OT_gtf  &gt;2222222
+</code></pre><p>从上一步结果中提取没有脱靶的sgRNA信息</p>
+<pre><code>awk -F &quot;\t&quot; &#39;{a[$1]+=$9}END{for(i in a){if(a[i]==0)print i}}&#39; 2222222 |xargs  -I {} grep -e &quot;{}\s&quot; Best_Repeat_Low_OT_gtf  &gt;sgRNA_end
 </code></pre><p>得到我们所需的sgRNA靶标序列</p>
 <p><img class="pimg" src="/Blog/img/sgRNAcase/otsgRNAcase.png" alt></p>
 <h2 id="对合格靶标序列进行筛选"><a href="#对合格靶标序列进行筛选" class="headerlink" title="对合格靶标序列进行筛选"></a>对合格靶标序列进行筛选</h2><p>经过上一步筛选后的sgRNA文件，我们需要根据以下几个指标筛选比较理想的靶标序列</p>
@@ -329,7 +331,7 @@ else print $0&quot;\t&quot;1;}&#39; Best_Repeat_Low_OT_gtf
     -o|--outfile=    output file path way
 
 </code></pre><blockquote>
-<p><a href="https://github.com/zpliu1126/Bioinformatic/blob/06893add163ceeda7fa21b71ed223dc18116434e/sgRNAcas9/comparisonsgRNA.py" target="_blank" rel="noopener">脚本获取</a></p>
+<p><a href="https://github.com/zpliu1126/Bioinformatic/blob/d25bf2100ea6e2b7ae0d65d5d95988836112fcd8/sgRNAcas9/comparisonsgRNA.py" target="_blank" rel="noopener">脚本获取</a></p>
 </blockquote>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://tiramisutes.github.io/2017/01/13/CRISPR-Designer.html" target="_blank" rel="noopener">tiramisutes</a><br><a href="http://www.biootools.com/cn/col.jsp?id=177" target="_blank" rel="noopener">sgRNAcase9</a></p>
 
