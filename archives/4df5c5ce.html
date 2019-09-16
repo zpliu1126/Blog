@@ -260,7 +260,10 @@
 </blockquote>
 <p>需要注意的是，在输入的CDNA序列中gene的ID编号不能够带有小数点，并且这里p参数后面可以省略参数，不然老是报错</p>
 <pre><code>perl sgRNAcas9_3.0.5.pl -i genes_end.fasta -x 20 -l 40 -m 60 -g Ghirsutum_genome.fasta -o b -t s -v l -n 5 -s -3 -e 33 -p /public/home/llpei/zpliu/zpliu/software/sgRNAcas9_3.0.5 2&gt;log.txt
-</code></pre><h2 id="提取对应等级的靶标ID"><a href="#提取对应等级的靶标ID" class="headerlink" title="提取对应等级的靶标ID"></a>提取对应等级的靶标ID</h2><blockquote>
+</code></pre><h2 id="将所有OT文件整合在一个文件中"><a href="#将所有OT文件整合在一个文件中" class="headerlink" title="将所有OT文件整合在一个文件中"></a>将所有OT文件整合在一个文件中</h2><pre><code class="bash">cat A.Sort_OT_byID/*  &gt;all_genen_OT.txt
+
+</code></pre>
+<h2 id="提取对应等级的靶标ID"><a href="#提取对应等级的靶标ID" class="headerlink" title="提取对应等级的靶标ID"></a>提取对应等级的靶标ID</h2><blockquote>
 <p>Discard &gt; High_risk &gt; moderate_risk &gt; low_risk &gt; repeat_sites_or_bad ? &gt; Best<br>一般提取Best 、repeat_sites_or_bad ? 、low_risk等级的ID</p>
 </blockquote>
 <pre><code>0M    1M      2M    3M     rank 
@@ -270,12 +273,32 @@
 </code></pre><blockquote>
 <p>例如repeat等级中0M靶向的位置有2个，我们要看看它靶向的位置是否是同一个基因，进行sgRNA评价</p>
 </blockquote>
-<h2 id="靶标序列评价"><a href="#靶标序列评价" class="headerlink" title="靶标序列评价"></a>靶标序列评价</h2><p>1.提取文件夹A.Sort_OT_byID中对应的0M 错配的碱基信息为0的进行评价</p>
-<p>2.使用自带的脚本<strong><em>ot2gtf_v2.pl</em></strong>，对得到的sgRNA靶标进行评价，看这个靶标是否靶向对应的基因</p>
+<pre><code class="bash">//提取Best靶标中0个错配的sgRNA 信息
+awk -F &quot;\t&quot; &#39;$23~/^B/{print $1}&#39; sgRNAcas9_report.xls  |xargs  -I {} grep {} all_genen_OT.txt |awk -F &quot;\t&quot; &#39;$4~/0M/{print}&#39; &gt;Best_OT.text
+//提取repeat_sites_or_bad? 类型的信息
+awk -F &quot;\t&quot; &#39;$23~/^R/{print $1}&#39; sgRNAcas9_report.xls  |xargs  -I {} grep {} all_genen_OT.txt |awk -F &quot;\t&quot; &#39;$4~/0M/{print}&#39; &gt;repeat_OT.text
+//提取低质量low_risk类型的信息
+awk -F &quot;\t&quot; &#39;$23~/^L/{print $1}&#39; sgRNAcas9_report.xls  |xargs  -I {} grep {} all_genen_OT.txt |awk -F &quot;\t&quot; &#39;$4~/0M/{print}&#39; &gt;Low_OT.text
+</code></pre>
+<h2 id="靶标序列评价"><a href="#靶标序列评价" class="headerlink" title="靶标序列评价"></a>靶标序列评价</h2><p>使用自带的脚本<strong><em>ot2gtf_v2.pl</em></strong>，对得到的sgRNA靶标进行评价，看这个靶标是否靶向哪个基因的外显子区域,</p>
+<p>在OT输出文件中包含了sgRNA在基因组上的位置信息，所以想借助gtf文件来看一下对应的位置是不是基因的exon区域，并且将对应的基因名字添加到后面一栏，基因组的gtf文件可以借助其他脚本进行转换获取</p>
+<pre><code class="bash">Ghir_A05G009820_A_54    POT984232       - - - - - - - - - - - - - - - - - - - - - - -   0M      Ghir_A05        8868917 +
+Ghir_D05G008800_S_140   POT981667       - - - - - - - - - - - - - - - - - - - - - - -   0M      Ghir_A05        8060310 -
+Ghir_D05G008800_S_140   POT3810799      - - - - - - - - - - - - - - - - - - - - - - -   0M      Ghir_D05        7188361 -
+Ghir_D05G008800_S_141   POT981663       - - - - - - - - - - - - - - - - - - - - - - -   0M      Ghir_A05        8060259 -
+
+</code></pre>
+<ul>
+<li><p>执行命令</p>
+<pre><code class="bash">perl ../Usefull_Script/ot2gtf_v2.pl  -i Low_OT.text  -g ../Gh_gene.gtf  -o Low_OT_gtf_out.text
+也可以将上一步所有的OT文件合并之后，在运行脚本
+</code></pre>
+</li>
+</ul>
 <blockquote>
 <p>这个脚本50行左右开始需要修改一下，默认是使用人类染色体编号进行的</p>
 </blockquote>
-<pre><code>    #1    pseudogene    gene    11869    14412    .    +    .    gene_id &quot;ENSG00000223972&quot;; gene_name &quot;DDX11L1&quot;; gene_source &quot;ensembl_havana&quot;; gene_biotype &quot;pseudogene&quot;;
+<pre><code class="perl">    #1    pseudogene    gene    11869    14412    .    +    .    gene_id &quot;ENSG00000223972&quot;; gene_name &quot;DDX11L1&quot;; gene_source &quot;ensembl_havana&quot;; gene_biotype &quot;pseudogene&quot;;
 
     (my $gtf_chr, my $gtf_annotation1, my $gtf_annotation2,    my $gtf_beg, my $gtf_end, 
         my $get_dot1, my $gtf_strand, my $gtf_dot2, my $gtf_annotation3)=split/\t/, $_; 
@@ -290,7 +313,8 @@
 
     $geneID = $1;
     #print $geneID,&quot;\n&quot;;
-</code></pre><h2 id="去除脱靶的sgRNA"><a href="#去除脱靶的sgRNA" class="headerlink" title="去除脱靶的sgRNA"></a>去除脱靶的sgRNA</h2><p>从三个点出发</p>
+</code></pre>
+<h2 id="去除脱靶的sgRNA"><a href="#去除脱靶的sgRNA" class="headerlink" title="去除脱靶的sgRNA"></a>去除脱靶的sgRNA</h2><p>从三个点出发</p>
 <ol>
 <li>靶标基因与sgRNA的序列信息一致赋权值 0</li>
 <li>sgRNA靶向同源基因和自己本身赋权值 0</li>
@@ -331,9 +355,9 @@ else print $0&quot;\t&quot;1;}&#39; Best_Repeat_Low_OT_gtf  &gt;2222222
     -o|--outfile=    output file path way
 
 </code></pre><blockquote>
-<p><a href="https://github.com/zpliu1126/Bioinformatic/blob/4e50896c86851f5dae87acd34b4e0fd1453a349c/sgRNAcas9/comparisonsgRNA.py" target="_blank" rel="noopener">脚本获取</a></p>
+<p><a href="https://github.com/zpliu1126/Bioinformatic/blob/33379dd39a948ff6e463a9c9f31ca5fb837ac998/sgRNAcas9/comparisonsgRNA.py" target="_blank" rel="noopener">脚本获取</a></p>
 </blockquote>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://tiramisutes.github.io/2017/01/13/CRISPR-Designer.html" target="_blank" rel="noopener">tiramisutes</a><br><a href="http://www.biootools.com/cn/col.jsp?id=177" target="_blank" rel="noopener">sgRNAcase9</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://tiramisutes.github.io/2017/01/13/CRISPR-Designer.html" target="_blank" rel="noopener">tiramisutes</a><br><a href="http://www.biootools.com/cn/col.jsp?id=177" target="_blank" rel="noopener">sgRNAcase9</a>awk</p>
 
     </div>
     
@@ -394,7 +418,7 @@ else print $0&quot;\t&quot;1;}&#39; Best_Repeat_Low_OT_gtf  &gt;2222222
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#靶标序列设计"><span class="toc-text">靶标序列设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提取对应等级的靶标ID"><span class="toc-text">提取对应等级的靶标ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#靶标序列评价"><span class="toc-text">靶标序列评价</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#去除脱靶的sgRNA"><span class="toc-text">去除脱靶的sgRNA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对合格靶标序列进行筛选"><span class="toc-text">对合格靶标序列进行筛选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#靶标序列设计"><span class="toc-text">靶标序列设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将所有OT文件整合在一个文件中"><span class="toc-text">将所有OT文件整合在一个文件中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提取对应等级的靶标ID"><span class="toc-text">提取对应等级的靶标ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#靶标序列评价"><span class="toc-text">靶标序列评价</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#去除脱靶的sgRNA"><span class="toc-text">去除脱靶的sgRNA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对合格靶标序列进行筛选"><span class="toc-text">对合格靶标序列进行筛选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
         
     </div>
 </aside>
